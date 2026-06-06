@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Ram Tuner · Privacy Policy | Guitar, Bass & Ukulele Tuner</title>
+  <!-- Google Fonts + Font Awesome -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: linear-gradient(145deg, #f6f9fc 0%, #eef2f8 100%);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      color: #1a2c3e;
+      line-height: 1.5;
+      padding: 2rem 1.5rem;
+    }
+
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    /* hero & icon card */
+    .hero-card {
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(2px);
+      border-radius: 3rem;
+      box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.02);
+      padding: 2rem 2rem 1.8rem 2rem;
+      transition: all 0.2s ease;
+      border: 1px solid rgba(255, 255, 255, 0.6);
+    }
+
+    .app-identity {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+    }
+
+    .icon-badge {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      flex-wrap: wrap;
+    }
+
+    /* app icon simulation (RGT style from brief) */
+    .mock-icon {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, #1e2b3c 0%, #2c4c6e 100%);
+      border-radius: 22px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 12px 18px -8px rgba(0, 0, 0, 0.25), inset 0 1px 1px rgba(255,255,255,0.2);
+      transition: transform 0.2s;
+    }
+    .mock-icon:hover {
+      transform: scale(1.02);
+    }
+    .mock-icon .rgt-text {
+      font-weight: 800;
+      font-size: 28px;
+      letter-spacing: 2px;
+      color: #FFE6C7;
+      line-height: 1;
+      text-shadow: 0 2px 3px rgba(0,0,0,0.2);
+    }
+    .mock-icon .guitar-label {
+      font-size: 9px;
+      font-weight: 600;
+      text-transform: uppercase;
+      background: #f5b04230;
+      padding: 2px 6px;
+      border-radius: 40px;
+      color: #FFE6C7;
+      margin-top: 4px;
+      letter-spacing: 0.5px;
+    }
+
+    .app-text {
+      display: flex;
+      flex-direction: column;
+    }
+    .app-name {
+      font-size: 1.9rem;
+      font-weight: 800;
+      background: linear-gradient(120deg, #1f3b4c, #2b5876);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      letter-spacing: -0.3px;
+      line-height: 1.2;
+    }
+    .app-tagline {
+      color: #4a627a;
+      font-weight: 500;
+      font-size: 0.95rem;
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 6px;
+    }
+    .tag {
+      background: #eef2ff;
+      padding: 4px 12px;
+      border-radius: 40px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #1f4e79;
+    }
+
+    .feature-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 1.4rem;
+      justify-content: flex-start;
+    }
+    .feature-pill {
+      background: white;
+      border-radius: 60px;
+      padding: 8px 20px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02), 0 1px 2px rgba(0, 0, 0, 0.05);
+      font-weight: 500;
+      font-size: 0.85rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      border: 1px solid #e2edf2;
+      transition: all 0.2s;
+    }
+    .feature-pill i {
+      color: #2c6b2f;
+      font-size: 1rem;
+    }
+    .feature-pill .fa-ad {
+      color: #e67e22;
+    }
+    .feature-pill .fa-moon {
+      color: #4f6f8f;
+    }
+
+    /* main privacy card */
+    .privacy-card {
+      background: #ffffff;
+      border-radius: 2.5rem;
+      box-shadow: 0 20px 40px -20px rgba(0, 0, 0, 0.12);
+      padding: 2rem 2rem 2.5rem 2rem;
+      transition: all 0.2s;
+      border: 1px solid #eef3f8;
+    }
+
+    h1 {
+      font-size: 1.9rem;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+      margin-bottom: 0.5rem;
+      color: #0c2e42;
+    }
+
+    .last-updated {
+      display: inline-block;
+      background: #f0f4f9;
+      border-radius: 40px;
+      padding: 5px 16px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: #2c5a74;
+      margin-bottom: 2rem;
+    }
+
+    .policy-section {
+      margin-bottom: 2rem;
+      scroll-margin-top: 1rem;
+    }
+    .policy-section h2 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 0.8rem;
+      color: #1f4e79;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-left: 4px solid #f3b33d;
+      padding-left: 1rem;
+    }
+    .policy-section h2 i {
+      font-size: 1.4rem;
+      color: #e67e22;
+    }
+    .policy-section p, .policy-section li {
+      color: #2c3f4f;
+      font-weight: 400;
+      margin-bottom: 0.7rem;
+      line-height: 1.6;
+    }
+    .policy-section ul {
+      margin: 0.8rem 0 0.8rem 1.8rem;
+    }
+    .policy-section li {
+      margin-bottom: 0.4rem;
+    }
+    .highlight-badge {
+      background: #ecf7f0;
+      border-radius: 24px;
+      padding: 1rem 1.2rem;
+      margin: 1rem 0;
+      border-left: 4px solid #3a9b5e;
+      font-size: 0.9rem;
+    }
+    hr {
+      margin: 1.8rem 0;
+      border: 0;
+      height: 1px;
+      background: linear-gradient(to right, #e0e8f0, transparent);
+    }
+    .footer-note {
+      text-align: center;
+      font-size: 0.8rem;
+      color: #6c86a0;
+      margin-top: 2rem;
+      padding-top: 1rem;
+      border-top: 1px dashed #dce5ec;
+    }
+
+    @media (max-width: 680px) {
+      body {
+        padding: 1rem;
+      }
+      .hero-card, .privacy-card {
+        padding: 1.5rem;
+      }
+      .app-name {
+        font-size: 1.5rem;
+      }
+      .mock-icon {
+        width: 65px;
+        height: 65px;
+      }
+      .mock-icon .rgt-text {
+        font-size: 22px;
+      }
+      .policy-section h2 {
+        font-size: 1.3rem;
+      }
+      .feature-pill {
+        padding: 5px 14px;
+        font-size: 0.75rem;
+      }
+    }
+    a {
+      color: #2b6e9e;
+      text-decoration: none;
+      font-weight: 500;
+      border-bottom: 1px dotted #bdd4e3;
+    }
+    a:hover {
+      color: #e67e22;
+      border-bottom-color: #e67e22;
+    }
+    .gradient-text {
+      background: linear-gradient(125deg, #2d6a4f, #1e6091);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <!-- Hero & Icon + brand section (matches app identity) -->
+  <div class="hero-card">
+    <div class="app-identity">
+      <div class="icon-badge">
+        <!-- App icon simulation based on "RGT Guitar Tuner" description -->
+        <div class="mock-icon">
+          <span class="rgt-text">RGT</span>
+          <span class="guitar-label">TUNER</span>
+        </div>
+        <div class="app-text">
+          <span class="app-name">Ram Tuner</span>
+          <div class="app-tagline">
+            <span><i class="fas fa-guitar"></i> Guitar · </span>
+            <span><i class="fas fa-microphone-alt"></i> Bass · </span>
+            <span><i class="fas fa-music"></i> Ukulele</span>
+          </div>
+        </div>
+      </div>
+      <div class="feature-strip">
+        <span class="feature-pill"><i class="fas fa-download"></i> Offline mode</span>
+        <span class="feature-pill"><i class="fas fa-coins"></i> 100% Free</span>
+        <span class="feature-pill"><i class="fas fa-ad"></i> Ads supported</span>
+        <span class="feature-pill"><i class="fas fa-battery-full"></i> Low latency tuner</span>
+      </div>
+    </div>
+    <div class="feature-strip" style="margin-top: 0.8rem;">
+      <span class="feature-pill"><i class="fas fa-check-circle"></i> Real-time pitch detection</span>
+      <span class="feature-pill"><i class="fas fa-wifi-slash"></i> No internet required for tuning</span>
+    </div>
+  </div>
+
+  <!-- Main Privacy Policy Card -->
+  <div class="privacy-card">
+    <h1>Privacy Policy</h1>
+    <div class="last-updated"><i class="far fa-calendar-alt"></i> Last updated: June 6, 2026</div>
+    <p style="margin-bottom: 1.5rem;"><strong>Ram Tuner</strong> (“we,” “our,” or “the App”) is a professional instrument tuner designed for <strong>guitar, bass, and ukulele</strong>. The app is completely <strong>free to use</strong>, works <strong>offline</strong>, and generates revenue through <strong>non-intrusive advertisements</strong> (ads). Your privacy is important to us. This page explains how we handle data, microphone access, and third-party services.</p>
+    
+    <div class="highlight-badge">
+      <i class="fas fa-shield-alt" style="margin-right: 10px; color:#2c6e2f;"></i> <strong>Key promise:</strong> Ram Tuner does NOT record, store, or transmit any audio. All tuning processing happens locally on your device. No personal account required.
+    </div>
+
+    <!-- section 1: information we collect -->
+    <div class="policy-section">
+      <h2><i class="fas fa-database"></i> 1. Information We Collect</h2>
+      <p><strong>No personal information required:</strong> You do not need to sign up, register, or provide any personal details (name, email, phone number) to use Ram Tuner.</p>
+      <p><strong>Microphone access (local only):</strong> The app requests microphone permission solely to detect pitch from your instrument. Audio signals are processed in real-time on your device using native algorithms. <strong>No audio is ever recorded, saved, or transmitted</strong> outside the app. After you finish tuning, the microphone data is immediately discarded.</p>
+      <p><strong>Automatically collected data via ad services:</strong> To serve ads and keep the app free, third-party advertising networks (Google AdMob) may collect certain device information such as: IP address, device type, operating system, advertising identifier (IDFA/AAID), and interactions with ads. This data is handled under their respective privacy policies and used to provide relevant ads & measure ad performance.</p>
+    </div>
+
+    <!-- section 2: offline functionality & data usage -->
+    <div class="policy-section">
+      <h2><i class="fas fa-microphone"></i> 2. Offline & Tuner Core</h2>
+      <p>Ram Tuner works fully <strong>offline</strong> — you can tune your guitar, bass, or ukulele without any internet connection. The pitch detection engine and instrument profiles (standard tuning, alternate tunings for bass/ukulele) are stored locally. No usage data is sent to our servers while you are offline. If you are online, ads may load to support the app, but the core tuning functionality remains independent of network status.</p>
+      <p>We do not track your tuning sessions or store any history of notes played — your privacy is preserved at all times.</p>
+    </div>
+
+    <!-- section 3: advertising (earnings) -->
+    <div class="policy-section">
+      <h2><i class="fas fa-chart-line"></i> 3. Advertising & Revenue Model</h2>
+      <p>Ram Tuner is free and supported by <strong>advertisements (ads)</strong>. We use <strong>Google AdMob</strong> as our primary ad mediation partner. AdMob may collect identifiers and usage data to display personalized or non-personalized ads based on your device settings and region.</p>
+      <ul>
+        <li><i class="fas fa-check-circle" style="color:#2b8c4a; width: 20px;"></i> You can control ad personalization via your device settings (for Android: Google Ads → Opt out of Ads Personalization; for iOS: Settings → Privacy → Apple Advertising).</li>
+        <li><i class="fas fa-check-circle" style="color:#2b8c4a;"></i> Third-party ad networks may use cookies or SDKs to measure ad effectiveness and prevent fraud.</li>
+        <li><i class="fas fa-check-circle" style="color:#2b8c4a;"></i> We do not share any direct personal information (like email or name) with advertisers.</li>
+      </ul>
+      <p>For more details, please review Google’s privacy policy: <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google Privacy & Terms</a>.</p>
+    </div>
+
+    <!-- section 4: third-party services & permissions -->
+    <div class="policy-section">
+      <h2><i class="fas fa-share-alt"></i> 4. Third-Party Services & Permissions</h2>
+      <p><strong>Permissions used by Ram Tuner:</strong></p>
+      <ul>
+        <li><strong>android.permission.RECORD_AUDIO</strong> / iOS Microphone permission — required for pitch detection. Used only locally while tuner is active.</li>
+        <li><strong>Internet permission</strong> — required to fetch and display advertisements (optional for offline usage). Without internet, ads won't show, but the tuner remains fully functional.</li>
+      </ul>
+      <p>We do not integrate analytics or crash reporting tools that collect personal data. The app does not contain tracking pixels, nor does it share data with any data brokers.</p>
+    </div>
+
+    <!-- section 5: children's privacy -->
+    <div class="policy-section">
+      <h2><i class="fas fa-child"></i> 5. Children’s Privacy</h2>
+      <p>Ram Tuner is suitable for users of all ages. We do not knowingly collect personal information from children under 13. The app does not request age information. Because we don’t collect personal data, there is no risk of children’s personal data being shared. However, if you are a parent and believe your child has provided us with any personal information (through a potential bug), please contact us immediately, and we will take steps to remove such information.</p>
+      <p>If ad personalization is enabled, Google AdMob may comply with child-directed policies based on the app's designations (we have marked the app as not targeted to children under 13 but still follows COPPA guidelines by not collecting personal info).</p>
+    </div>
+
+    <!-- section 6: data retention & security -->
+    <div class="policy-section">
+      <h2><i class="fas fa-lock"></i> 6. Data Retention & Security</h2>
+      <p>Since we do not store any user-generated content or personal data on our servers, there is no data retention cycle. Any local app preferences (like last instrument selected) are stored on your device only and can be cleared by uninstalling the app or clearing app data. We implement reasonable security measures to protect the app from vulnerabilities, but note that no method of transmission over the internet for ads is 100% secure — third-party SDKs follow their own security practices.</p>
+    </div>
+
+    <!-- section 7: your choices & rights (GDPR/CCPA mention) -->
+    <div class="policy-section">
+      <h2><i class="fas fa-user-check"></i> 7. Your Privacy Rights</h2>
+      <p>If you reside in the European Economic Area (EEA), California, or other regions with privacy laws, you have the following rights:</p>
+      <ul>
+        <li><strong>Right to access / deletion:</strong> Since we don’t store personal data, no action is needed. For any data held by ad networks (like advertising ID), you can reset your advertising ID via device settings.</li>
+        <li><strong>Opt-out of personalized ads:</strong> On Android, go to Settings → Google → Ads → Opt out of Ads Personalization. On iOS, go to Settings → Privacy → Apple Advertising → Turn off Personalized Ads.</li>
+        <li><strong>Do Not Track signals:</strong> Our ad partners may honor DNT signals, but we recommend adjusting ad settings directly.</li>
+      </ul>
+      <p>You may also uninstall the app at any time — this action removes all local data and preferences.</p>
+    </div>
+
+    <!-- section 8: changes to this policy -->
+    <div class="policy-section">
+      <h2><i class="fas fa-sync-alt"></i> 8. Changes to This Privacy Policy</h2>
+      <p>We may update this privacy policy from time to time to reflect changes in our practices or for legal/regulatory reasons. Any updates will be posted on this page with a revised “Last updated” date. For significant changes, we may notify you via an in-app notice or a pop-up when you open the app. Continued use of Ram Tuner after changes constitutes acceptance of the revised policy.</p>
+    </div>
+
+    <!-- section 9: contact us -->
+    <div class="policy-section">
+      <h2><i class="fas fa-envelope-open-text"></i> 9. Contact Us</h2>
+      <p>If you have any questions, concerns, or requests regarding this privacy policy, please reach out to our support team:</p>
+      <p><i class="fas fa-envelope"></i> <strong>Email:</strong> <a href="mailto:support@ramtuner.com">support@ramtuner.com</a><br>
+      <i class="fas fa-globe"></i> <strong>Web:</strong> <a href="#" style="cursor:default;">www.ramtuner.com/privacy</a> (coming soon)</p>
+      <p>We are committed to resolving any privacy issues transparently.</p>
+    </div>
+
+    <!-- extra note about free / ads + offline -->
+    <hr>
+    <div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; font-size: 0.85rem; background: #F8FBFE; padding: 1rem; border-radius: 1.8rem;">
+      <div><i class="fas fa-guitar"></i> Guitar · Bass · Ukulele</div>
+      <div><i class="fas fa-download"></i> Works offline (no Wi-Fi needed)</div>
+      <div><i class="fas fa-ad"></i> Free + ads support development</div>
+      <div><i class="fas fa-microphone-alt"></i> Zero audio recording</div>
+    </div>
+
+    <div class="footer-note">
+      <i class="far fa-copyright"></i> 2026 Ram Tuner — Precision instrument tuner. All rights reserved.<br>
+      <span style="font-size: 0.7rem;">Ram Tuner uses your microphone only for real-time pitch detection. No data is ever recorded or transmitted. Designed for musicians worldwide.</span>
+    </div>
+  </div>
+</div>
+</body>
+</html>
