@@ -2,1058 +2,520 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Hill Hop</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy | Hill Hop</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Exo+2:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Exo+2:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-deep: #0a0e17;
-            --accent: #4ade80;
-            --accent-glow: rgba(74, 222, 128, 0.4);
-            --secondary: #f59e0b;
-            --card: rgba(17, 24, 39, 0.8);
-            --border: rgba(74, 222, 128, 0.2);
+            --sky-top: #4a8bb5;
+            --sky-bottom: #7ec8e3;
+            --hill-far: #2d6b3f;
+            --hill-near: #4ade80;
+            --dirt: #6b4c12;
+            --dirt-dark: #3d2a08;
+            --ui-dark: rgba(10, 15, 26, 0.85);
+            --ui-border: rgba(74, 222, 128, 0.4);
+            --ui-green: #4ade80;
+            --ui-green-glow: rgba(74, 222, 128, 0.5);
+            --ui-red: #ef4444;
+            --ui-amber: #f59e0b;
+            --ui-coin: #fbbf24;
+            --text-light: #f0f9ff;
+            --text-muted: #94a3b8;
         }
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        html, body { width: 100%; height: 100%; overflow: hidden; background: var(--bg-deep); }
-        body { font-family: 'Exo 2', sans-serif; touch-action: none; -webkit-user-select: none; user-select: none; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Exo 2', sans-serif;
+            background: linear-gradient(180deg, var(--sky-top) 0%, var(--sky-bottom) 60%, #c5e8f0 100%);
+            color: var(--text-light);
+            min-height: 100vh;
+            overflow-x: hidden;
+            line-height: 1.7;
+            position: relative;
+        }
         .font-display { font-family: 'Orbitron', sans-serif; }
 
-        #gameCanvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
-
-        /* Starfield for menu */
-        #starfield { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
-        .nebula-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none;
-            background: radial-gradient(ellipse at 20% 20%, rgba(74,222,128,0.07) 0%, transparent 50%),
-                        radial-gradient(ellipse at 80% 70%, rgba(245,158,11,0.06) 0%, transparent 50%),
-                        radial-gradient(ellipse at 50% 50%, rgba(52,211,153,0.04) 0%, transparent 60%);
+        /* Landscape Background */
+        .landscape-bg {
+            position: fixed; bottom: 0; left: 0; width: 100%; height: 35%; z-index: 0; pointer-events: none;
+        }
+        .hill-far {
+            position: absolute; bottom: 15%; left: 0; width: 100%; height: 200px;
+            background: var(--hill-far); border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+            transform: translateY(50%);
+        }
+        .hill-near {
+            position: absolute; bottom: 5%; left: -10%; width: 120%; height: 180px;
+            background: var(--hill-near); border-radius: 40% 60% 0 0 / 100% 100% 0 0;
+            transform: translateY(50%);
+        }
+        .dirt-layer {
+            position: absolute; bottom: 0; left: 0; width: 100%; height: 15%;
+            background: linear-gradient(180deg, var(--dirt) 0%, var(--dirt-dark) 100%);
+        }
+        .grass-line {
+            position: absolute; bottom: 15%; left: 0; width: 100%; height: 4px;
+            background: #22c55e; box-shadow: 0 0 10px #22c55e;
         }
 
-        /* Start Screen */
-        #startScreen { position: fixed; inset: 0; z-index: 20; display: flex; flex-direction: column; align-items: center; justify-content: center;
-            background: rgba(10,14,23,0.85); backdrop-filter: blur(8px); }
-        .logo-text { background: linear-gradient(135deg, var(--accent) 0%, var(--secondary) 100%);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; letter-spacing: 0.1em; }
-        .start-btn { padding: 1rem 3rem; background: linear-gradient(135deg, var(--accent), #22c55e); color: var(--bg-deep);
-            font-family: 'Orbitron', sans-serif; font-weight: 700; font-size: 1.1rem; border: none; border-radius: 100px; cursor: pointer;
-            box-shadow: 0 4px 30px var(--accent-glow); transition: transform 0.2s, box-shadow 0.2s; }
-        .start-btn:hover { transform: scale(1.05); box-shadow: 0 6px 40px var(--accent-glow); }
-        .pulse-text { animation: pulse 2s ease-in-out infinite; }
-        @keyframes pulse { 0%,100% { opacity: 0.6; } 50% { opacity: 1; } }
+        /* Clouds */
+        .cloud {
+            position: fixed; background: rgba(255,255,255,0.8); border-radius: 50px;
+            z-index: 0; pointer-events: none;
+        }
+        .cloud::after {
+            content: ''; position: absolute; background: rgba(255,255,255,0.8); border-radius: 50%;
+        }
+        .cloud-1 { width: 120px; height: 40px; top: 15%; left: 20%; animation: floatCloud 45s linear infinite; }
+        .cloud-1::after { width: 60px; height: 60px; top: -30px; left: 20px; }
+        .cloud-2 { width: 160px; height: 50px; top: 25%; left: 70%; animation: floatCloud 60s linear infinite reverse; }
+        .cloud-2::after { width: 70px; height: 70px; top: -35px; left: 40px; }
+        .cloud-3 { width: 100px; height: 35px; top: 10%; left: 50%; animation: floatCloud 55s linear infinite; }
+        .cloud-3::after { width: 50px; height: 50px; top: -25px; left: 30px; }
+
+        @keyframes floatCloud {
+            0% { transform: translateX(-150px); }
+            100% { transform: translateX(calc(100vw + 150px)); }
+        }
+
+        /* Content Wrapper */
+        .content-wrapper { position: relative; z-index: 10; padding-bottom: 35vh; }
+
+        /* Game Header */
+        .game-header {
+            padding: 1rem 0; border-bottom: 2px solid rgba(0,0,0,0.2);
+            background: var(--ui-dark); backdrop-filter: blur(10px);
+            position: sticky; top: 0; z-index: 100;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+        .logo-text { color: var(--ui-coin); text-shadow: 2px 2px 0px rgba(0,0,0,0.5); letter-spacing: 0.05em; }
+        
+        .nav-link {
+            position: relative; color: var(--text-muted); text-decoration: none;
+            font-weight: 600; transition: color 0.3s; padding: 0.5rem 1rem;
+            border-radius: 8px;
+        }
+        .nav-link:hover { color: var(--ui-green); background: rgba(74, 222, 128, 0.1); }
+        .nav-link.active { color: var(--ui-green); }
+
+        /* Hero Section */
+        .hero-section { padding: 5rem 0 3rem; text-align: center; }
+        .hero-title {
+            font-size: clamp(2.5rem, 8vw, 5rem); font-weight: 900; letter-spacing: 0.05em;
+            margin-bottom: 1rem; color: #1e293b;
+            text-shadow: 3px 3px 0px rgba(255,255,255,0.3);
+            opacity: 0; transform: translateY(30px); animation: fadeSlideUp 0.8s ease forwards;
+        }
+        .hero-subtitle {
+            font-size: clamp(1rem, 2.5vw, 1.25rem); color: #1e293b; max-width: 650px;
+            margin: 0 auto 1.5rem; font-weight: 500;
+            opacity: 0; transform: translateY(20px); animation: fadeSlideUp 0.8s ease 0.2s forwards;
+        }
+        .last-updated {
+            display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 1rem;
+            padding: 0.6rem 1.5rem; background: var(--ui-dark); border: 2px solid var(--ui-border);
+            border-radius: 50px; font-size: 0.875rem; color: var(--text-light); font-weight: 600;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            opacity: 0; animation: fadeSlideUp 0.8s ease 0.4s forwards;
+        }
+        .last-updated svg { width: 16px; height: 16px; color: var(--ui-coin); }
+
         @keyframes fadeSlideUp { to { opacity: 1; transform: translateY(0); } }
 
-        /* HUD */
-        #hud { position: fixed; top: 0; left: 0; right: 0; z-index: 10; pointer-events: none; padding: 12px 16px;
-            display: none; }
-        .hud-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 8px 14px;
-            backdrop-filter: blur(12px); display: flex; align-items: center; gap: 8px; }
-        .hud-value { font-family: 'Orbitron', sans-serif; font-weight: 700; font-size: 1rem; color: #e8f0ff; }
-        .hud-label { font-size: 0.65rem; color: #7b8ca8; text-transform: uppercase; letter-spacing: 0.1em; }
-        .coin-icon { width: 20px; height: 20px; border-radius: 50%; background: linear-gradient(135deg, #fbbf24, #f59e0b);
-            display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 900; color: #78350f; flex-shrink: 0; }
+        /* Main Content */
+        .policy-container { max-width: 900px; margin: 0 auto; padding: 0 1.5rem; }
 
-        /* Controls */
-        #controls { position: fixed; bottom: 0; left: 0; right: 0; z-index: 10; display: none;
-            padding: 16px 20px 28px; pointer-events: none; }
-        .ctrl-btn { pointer-events: auto; -webkit-tap-highlight-color: transparent; border: none; border-radius: 16px;
-            font-family: 'Orbitron', sans-serif; font-weight: 700; font-size: 1.1rem; cursor: pointer;
-            transition: transform 0.1s, filter 0.1s; touch-action: none; }
-        .ctrl-btn:active, .ctrl-btn.pressed { transform: scale(0.94); filter: brightness(1.3); }
-        .brake-btn { background: rgba(239,68,68,0.25); color: #fca5a5; border: 2px solid rgba(239,68,68,0.4);
-            padding: 20px 32px; }
-        .gas-btn { background: rgba(74,222,128,0.2); color: #86efac; border: 2px solid rgba(74,222,128,0.4);
-            padding: 20px 32px; }
+        /* Section Cards */
+        .policy-section {
+            margin-bottom: 2rem; background: var(--ui-dark); border: 2px solid var(--ui-border);
+            border-radius: 20px; padding: 2rem; backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1);
+            opacity: 0; transform: translateY(40px) scale(0.98);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+        .policy-section.visible { animation: sectionReveal 0.6s ease forwards; }
+        @keyframes sectionReveal { to { opacity: 1; transform: translateY(0) scale(1); } }
+        
+        .policy-section:hover { 
+            transform: translateY(-5px) scale(1.01); 
+            border-color: var(--ui-coin);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4), 0 0 20px var(--ui-green-glow); 
+        }
 
-        /* Game Over */
-        #gameOverScreen { position: fixed; inset: 0; z-index: 20; display: none; flex-direction: column; align-items: center; justify-content: center;
-            background: rgba(10,14,23,0.88); backdrop-filter: blur(12px); }
-        .go-card { background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 2rem 2.5rem;
-            backdrop-filter: blur(16px); text-align: center; max-width: 380px; width: 90%; }
-        .stat-row { display: flex; justify-content: space-between; padding: 0.6rem 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
-        .stat-label { color: #7b8ca8; font-size: 0.85rem; }
-        .stat-value { font-family: 'Orbitron', sans-serif; font-weight: 700; color: #e8f0ff; }
-        .retry-btn { padding: 0.9rem 2.5rem; background: linear-gradient(135deg, var(--accent), #22c55e); color: var(--bg-deep);
-            font-family: 'Orbitron', sans-serif; font-weight: 700; font-size: 0.95rem; border: none; border-radius: 100px; cursor: pointer;
-            box-shadow: 0 4px 20px var(--accent-glow); transition: transform 0.2s; margin-top: 1.2rem; }
-        .retry-btn:hover { transform: scale(1.05); }
+        .section-number {
+            display: inline-flex; align-items: center; justify-content: center;
+            width: 40px; height: 40px; background: linear-gradient(135deg, var(--ui-coin), #d97706);
+            border-radius: 50%; font-family: 'Orbitron', sans-serif; font-weight: 700;
+            font-size: 0.9rem; color: #78350f; margin-bottom: 1rem; border: 2px solid #fef08a;
+            box-shadow: 0 4px 0 #b45309, 0 0 15px rgba(251, 191, 36, 0.4);
+        }
+        .section-title { font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem; color: var(--ui-green); }
+        .section-content { color: var(--text-light); font-weight: 400; }
+        .section-content p { margin-bottom: 1rem; }
+        .section-content ul { list-style: none; margin-bottom: 1rem; }
+        .section-content li { position: relative; padding-left: 1.8rem; margin-bottom: 0.75rem; }
+        .section-content li::before {
+            content: '⏱'; position: absolute; left: 0; top: 0.15em; font-size: 0.9em;
+        }
 
-        /* Speed display */
-        #speedDisplay { position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%); z-index: 10;
-            display: none; text-align: center; pointer-events: none; }
-        .speed-value { font-family: 'Orbitron', sans-serif; font-weight: 900; font-size: 2rem; color: #e8f0ff;
-            text-shadow: 0 2px 12px rgba(0,0,0,0.5); line-height: 1; }
-        .speed-unit { font-family: 'Orbitron', sans-serif; font-size: 0.65rem; color: #7b8ca8; letter-spacing: 0.15em; }
+        /* Highlight Box */
+        .highlight-box {
+            background: rgba(245, 158, 11, 0.15); border-left: 4px solid var(--ui-amber);
+            padding: 1rem 1.5rem; border-radius: 0 12px 12px 0; margin: 1.5rem 0;
+            box-shadow: inset 0 0 20px rgba(245, 158, 11, 0.05);
+        }
+        .highlight-box p { margin: 0; color: #fde68a; font-weight: 500; }
 
-        /* Distance banner */
-        #distBanner { position: fixed; top: 60px; left: 50%; transform: translateX(-50%); z-index: 10;
-            display: none; pointer-events: none; }
+        /* Developer Badge */
+        .developer-badge {
+            display: inline-flex; align-items: center; gap: 0.75rem; padding: 0.75rem 1.25rem;
+            background: rgba(0,0,0,0.3); border: 1px solid var(--ui-border); border-radius: 12px; margin-top: 1rem;
+        }
+        .dev-icon {
+            width: 40px; height: 40px; background: linear-gradient(135deg, var(--ui-amber), #fbbf24);
+            border-radius: 10px; display: flex; align-items: center; justify-content: center;
+            border: 2px solid #fef08a; box-shadow: 0 3px 0 #b45309;
+        }
+        .dev-icon svg { width: 20px; height: 20px; color: white; }
+        .dev-info { text-align: left; }
+        .dev-label { font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em; }
+        .dev-name { font-family: 'Orbitron', sans-serif; font-weight: 700; color: var(--ui-amber); }
+
+        /* Contact Grid */
+        .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 1.5rem; }
+        .contact-item {
+            display: flex; align-items: center; gap: 0.75rem; padding: 1rem;
+            background: rgba(255,255,255,0.05); border: 2px solid transparent; border-radius: 12px;
+            transition: all 0.3s; cursor: pointer; text-decoration: none; color: inherit;
+        }
+        .contact-item:hover { background: rgba(74, 222, 128, 0.1); border-color: var(--ui-green); transform: translateX(4px); }
+        .contact-item svg { width: 20px; height: 20px; color: var(--ui-green); flex-shrink: 0; }
+        .contact-item span { font-size: 0.9rem; color: var(--text-muted); font-weight: 500; }
+
+        /* Footer */
+        .site-footer {
+            border-top: 2px solid rgba(0,0,0,0.2); padding: 3rem 1.5rem;
+            background: var(--ui-dark); backdrop-filter: blur(20px); position: relative; z-index: 10;
+        }
+        .footer-content { max-width: 900px; margin: 0 auto; text-align: center; }
+        .footer-links { display: flex; justify-content: center; gap: 2rem; margin-top: 1.5rem; flex-wrap: wrap; }
+        .footer-links a { color: var(--text-muted); text-decoration: none; font-size: 0.875rem; transition: color 0.3s; font-weight: 500; }
+        .footer-links a:hover { color: var(--ui-green); }
+
+        /* Floating Back Button */
+        .back-to-game {
+            position: fixed; bottom: 2rem; right: 2rem; z-index: 100;
+            display: flex; align-items: center; gap: 0.5rem; padding: 1rem 1.5rem;
+            background: linear-gradient(180deg, #4ade80, #22c55e); color: #052e16;
+            font-family: 'Orbitron', sans-serif; font-weight: 700; font-size: 0.875rem;
+            text-decoration: none; border-radius: 12px; border-bottom: 4px solid #15803d;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3); transition: all 0.2s;
+        }
+        .back-to-game:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(74, 222, 128, 0.4); }
+        .back-to-game:active { transform: translateY(2px); border-bottom-width: 2px; }
+        .back-to-game svg { width: 18px; height: 18px; }
+
+        /* Mobile Nav */
+        .mobile-nav { display: none; position: fixed; top: 60px; left: 0; right: 0; background: var(--ui-dark); border-bottom: 2px solid var(--ui-border); padding: 1rem; z-index: 99; flex-direction: column; gap: 0.5rem; }
+        .mobile-nav.show { display: flex; }
+        .mobile-nav a { color: var(--text-light); text-decoration: none; padding: 0.75rem; border-radius: 8px; font-weight: 500; }
+        .mobile-nav a:hover { background: rgba(255,255,255,0.1); }
 
         @media (max-width: 640px) {
-            .hud-value { font-size: 0.85rem; }
-            .ctrl-btn { font-size: 0.95rem; padding: 18px 24px; }
-            .speed-value { font-size: 1.6rem; }
+            .policy-section { padding: 1.5rem; }
+            .section-title { font-size: 1.25rem; }
+            .back-to-game { bottom: 1rem; right: 1rem; padding: 0.875rem 1.25rem; font-size: 0.75rem; }
+            .footer-links { flex-direction: column; gap: 1rem; }
         }
+
         @media (prefers-reduced-motion: reduce) {
             *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
         }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--dirt-dark); }
+        ::-webkit-scrollbar-thumb { background: var(--ui-green); border-radius: 4px; }
     </style>
 </head>
 <body>
-    <!-- Starfield Background for menu -->
-    <canvas id="starfield"></canvas>
-    <div class="nebula-overlay" id="nebula"></div>
-
-    <!-- Game Canvas -->
-    <canvas id="gameCanvas"></canvas>
-
-    <!-- Start Screen -->
-    <div id="startScreen">
-        <div style="opacity:0; transform:translateY(30px); animation: fadeSlideUp 0.8s ease 0.2s forwards;">
-            <h1 class="font-display logo-text" style="font-size: clamp(3rem, 12vw, 6rem); font-weight: 900; margin-bottom: 0.5rem;">HILL HOP</h1>
-        </div>
-        <div style="opacity:0; transform:translateY(20px); animation: fadeSlideUp 0.8s ease 0.5s forwards;">
-            <p style="color: #7b8ca8; font-size: 1.1rem; margin-bottom: 2.5rem; letter-spacing: 0.05em;">Build. Race. Conquer every hill.</p>
-        </div>
-        <div style="opacity:0; transform:translateY(20px); animation: fadeSlideUp 0.8s ease 0.8s forwards;">
-            <button class="start-btn" id="startBtn">START RACE</button>
-        </div>
-        <div style="opacity:0; transform:translateY(20px); animation: fadeSlideUp 0.8s ease 1.1s forwards; margin-top: 2rem;">
-            <p class="pulse-text" style="color: #7b8ca8; font-size: 0.8rem;">Arrow Keys / WASD / Touch Controls</p>
-        </div>
+    <!-- Landscape Background Elements -->
+    <div class="cloud cloud-1"></div>
+    <div class="cloud cloud-2"></div>
+    <div class="cloud cloud-3"></div>
+    <div class="landscape-bg">
+        <div class="hill-far"></div>
+        <div class="grass-line"></div>
+        <div class="hill-near"></div>
+        <div class="dirt-layer"></div>
     </div>
 
-    <!-- HUD -->
-    <div id="hud">
-        <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 8px;">
-            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-                <div class="hud-card">
-                    <div class="coin-icon">$</div>
-                    <div>
-                        <div class="hud-label">Coins</div>
-                        <div class="hud-value" id="coinCount">0</div>
+    <!-- Content -->
+    <div class="content-wrapper">
+        <!-- Header -->
+        <header class="game-header">
+            <div class="max-w-6xl mx-auto px-6 flex items-center justify-between">
+                <a href="#" class="font-display logo-text text-xl md:text-2xl font-bold">
+                    HILL HOP
+                </a>
+                <nav class="hidden md:flex items-center gap-4">
+                    <a href="#" class="nav-link">Home</a>
+                    <a href="#" class="nav-link">Game</a>
+                    <a href="#" class="nav-link">Leaderboard</a>
+                    <a href="#" class="nav-link active">Privacy</a>
+                </nav>
+                <button id="mobileMenuBtn" class="md:hidden p-2 text-white" aria-label="Menu">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- Mobile Nav -->
+        <div class="mobile-nav" id="mobileMenu">
+            <a href="#">Home</a>
+            <a href="#">Game</a>
+            <a href="#">Leaderboard</a>
+            <a href="#" style="color: var(--ui-green);">Privacy</a>
+        </div>
+
+        <!-- Hero -->
+        <section class="hero-section">
+            <h1 class="font-display hero-title">PRIVACY POLICY</h1>
+            <p class="hero-subtitle">
+                Your privacy matters to us. This policy explains how Hill Hop handles your data as you build, race, and conquer every hill.
+            </p>
+            <div class="last-updated">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                    <line x1="16" y1="2" x2="16" y2="6"></line>
+                    <line x1="8" y1="2" x2="8" y2="6"></line>
+                    <line x1="3" y1="10" x2="21" y2="10"></line>
+                </svg>
+                Last Updated: June 2026
+            </div>
+        </section>
+
+        <!-- Policy Content -->
+        <main class="policy-container">
+            <article class="policy-section">
+                <div class="section-number">01</div>
+                <h2 class="font-display section-title">Introduction</h2>
+                <div class="section-content">
+                    <p>
+                        Welcome to Hill Hop! This Privacy Policy describes how Ramram Dev ("we," "our," or "us") collects, uses, and protects your information when you play our 2D car-building hill-racing game. By playing Hill Hop, you agree to the collection and use of information in accordance with this policy.
+                    </p>
+                    <div class="highlight-box">
+                        <p>We believe in transparency. Hill Hop is designed to collect minimal data while you focus on building unique cars and conquering every hill.</p>
                     </div>
                 </div>
-                <div class="hud-card">
-                    <div style="color: var(--accent);">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </article>
+
+            <article class="policy-section">
+                <div class="section-number">02</div>
+                <h2 class="font-display section-title">Information We Collect</h2>
+                <div class="section-content">
+                    <p>We collect the following types of information to provide and improve your hill-racing experience:</p>
+                    <ul>
+                        <li><strong>Vehicle Builds:</strong> Your custom car configurations, part combinations, and upgrade choices are stored locally on your device.</li>
+                        <li><strong>Race Progress:</strong> Hill completion times, finish-line records, and level progression are saved to track your achievements.</li>
+                        <li><strong>Device Information:</strong> Basic device type and operating system version for performance optimization across different terrain types.</li>
+                        <li><strong>Usage Analytics:</strong> Anonymous gameplay statistics to help us balance hill difficulty and car-building mechanics.</li>
+                        <li><strong>Leaderboard Data:</strong> If you opt-in, your username and hill-climb times may be displayed on public leaderboards.</li>
+                    </ul>
+                </div>
+            </article>
+
+            <article class="policy-section">
+                <div class="section-number">03</div>
+                <h2 class="font-display section-title">How We Use Your Data</h2>
+                <div class="section-content">
+                    <p>The data we collect is used exclusively for:</p>
+                    <ul>
+                        <li>Saving your custom car builds and garage configurations</li>
+                        <li>Tracking your hill-climbing progress and finish-line achievements</li>
+                        <li>Displaying your best times on global leaderboards (with your consent)</li>
+                        <li>Analyzing race patterns to fine-tune hill physics and vehicle balance</li>
+                        <li>Fixing bugs, optimizing terrain generation, and improving frame rates</li>
+                        <li>Preventing cheating and maintaining fair competition</li>
+                    </ul>
+                    <p>We never sell your personal data to third parties.</p>
+                </div>
+            </article>
+
+            <article class="policy-section">
+                <div class="section-number">04</div>
+                <h2 class="font-display section-title">Data Storage & Security</h2>
+                <div class="section-content">
+                    <p>
+                        Your car builds, race records, and game progress are primarily stored locally on your device. For leaderboard functionality, data is transmitted securely using industry-standard encryption protocols. We implement appropriate security measures to protect against unauthorized access, alteration, or destruction of your data.
+                    </p>
+                    <div class="highlight-box">
+                        <p>Local storage means you're in the driver's seat. Clear your game data anytime through your device settings.</p>
                     </div>
-                    <div>
-                        <div class="hud-label">Time</div>
-                        <div class="hud-value" id="timerDisplay">00:00</div>
+                </div>
+            </article>
+
+            <article class="policy-section">
+                <div class="section-number">05</div>
+                <h2 class="font-display section-title">Third-Party Services</h2>
+                <div class="section-content">
+                    <p>Hill Hop may integrate with the following third-party services:</p>
+                    <ul>
+                        <li><strong>Game Services:</strong> Google Play Games or Apple Game Center for achievements and leaderboards</li>
+                        <li><strong>Analytics:</strong> Anonymous usage tracking to improve hill physics and car-building balance</li>
+                        <li><strong>Advertising:</strong> Optional rewarded ads may be served through trusted ad networks</li>
+                    </ul>
+                    <p>Each third-party service operates under its own privacy policy. We encourage you to review their policies.</p>
+                </div>
+            </article>
+
+            <article class="policy-section">
+                <div class="section-number">06</div>
+                <h2 class="font-display section-title">Your Rights</h2>
+                <div class="section-content">
+                    <p>You have the following rights regarding your data:</p>
+                    <ul>
+                        <li><strong>Access:</strong> Request a copy of your stored data, including car builds and race history</li>
+                        <li><strong>Deletion:</strong> Request deletion of your data from our servers</li>
+                        <li><strong>Opt-Out:</strong> Disable analytics and personalized advertising</li>
+                        <li><strong>Portability:</strong> Export your garage configurations and race progress data</li>
+                    </ul>
+                    <p>To exercise any of these rights, please contact us using the information below.</p>
+                </div>
+            </article>
+
+            <article class="policy-section">
+                <div class="section-number">07</div>
+                <h2 class="font-display section-title">Children's Privacy</h2>
+                <div class="section-content">
+                    <p>
+                        Hill Hop is suitable for players of all ages. We do not knowingly collect personal information from children under 13 without parental consent. If you believe we have collected information from a child under 13, please contact us immediately, and we will take steps to delete such information.
+                    </p>
+                </div>
+            </article>
+
+            <article class="policy-section">
+                <div class="section-number">08</div>
+                <h2 class="font-display section-title">Policy Updates</h2>
+                <div class="section-content">
+                    <p>
+                        We may update this Privacy Policy from time to time. Changes will be posted on this page with an updated revision date. Significant changes will be notified through the game or other communication channels. Continued use of Hill Hop after changes constitutes acceptance of the updated policy.
+                    </p>
+                </div>
+            </article>
+
+            <article class="policy-section">
+                <div class="section-number">09</div>
+                <h2 class="font-display section-title">Contact Us</h2>
+                <div class="section-content">
+                    <p>Have questions about this Privacy Policy? We're here to help you get back to racing.</p>
+
+                    <div class="developer-badge">
+                        <div class="dev-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                                <polyline points="2 17 12 22 22 17"></polyline>
+                                <polyline points="2 12 12 17 22 12"></polyline>
+                            </svg>
+                        </div>
+                        <div class="dev-info">
+                            <div class="dev-label">Developed By</div>
+                            <div class="dev-name">Ramram Dev</div>
+                        </div>
+                    </div>
+
+                    <div class="contact-grid">
+                        <a href="mailto:support@ramramdev.com" class="contact-item">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                                <polyline points="22,6 12,13 2,6"></polyline>
+                            </svg>
+                            <span>support@ramramdev.com</span>
+                        </a>
+                        <a href="#" class="contact-item">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                            </svg>
+                            <span>github.com/ramramdev</span>
+                        </a>
+                        <a href="#" class="contact-item">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+                            </svg>
+                            <span>@ramramdev</span>
+                        </a>
                     </div>
                 </div>
-            </div>
-            <div class="hud-card">
-                <div style="color: var(--secondary);">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+            </article>
+        </main>
+
+        <!-- Footer -->
+        <footer class="site-footer">
+            <div class="footer-content">
+                <div class="font-display logo-text" style="font-size: 1.5rem; margin-bottom: 1rem;">HILL HOP</div>
+                <p style="color: var(--text-muted); font-size: 0.875rem;">
+                    Developed with passion by Ramram Dev. Build unique cars, ride the hills, and cross every finish line.
+                </p>
+                <div class="footer-links">
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Support</a>
+                    <a href="#">More Games</a>
                 </div>
-                <div>
-                    <div class="hud-label">Distance</div>
-                    <div class="hud-value" id="distDisplay">0 m</div>
-                </div>
+                <p style="color: var(--text-muted); font-size: 0.75rem; margin-top: 2rem; opacity: 0.6;">
+                    &copy; 2026 Ramram Dev. All rights reserved.
+                </p>
             </div>
-        </div>
+        </footer>
     </div>
 
-    <!-- Speed Display -->
-    <div id="speedDisplay">
-        <div class="speed-value" id="speedValue">0</div>
-        <div class="speed-unit">KPH</div>
-    </div>
-
-    <!-- Controls -->
-    <div id="controls">
-        <div style="display: flex; justify-content: space-between; align-items: flex-end;">
-            <button class="ctrl-btn brake-btn" id="brakeBtn">BRAKE</button>
-            <button class="ctrl-btn gas-btn" id="gasBtn">GAS</button>
-        </div>
-    </div>
-
-    <!-- Game Over Screen -->
-    <div id="gameOverScreen">
-        <div class="go-card">
-            <h2 class="font-display" style="font-size: 2rem; font-weight: 900; color: #ef4444; margin-bottom: 0.3rem;">WRECKED</h2>
-            <p style="color: #7b8ca8; font-size: 0.85rem; margin-bottom: 1.5rem;">Your car flipped over!</p>
-            <div style="margin-bottom: 1rem;">
-                <div class="stat-row">
-                    <span class="stat-label">Distance</span>
-                    <span class="stat-value" id="goDistance">0 m</span>
-                </div>
-                <div class="stat-row">
-                    <span class="stat-label">Coins</span>
-                    <span class="stat-value" style="color: var(--secondary);" id="goCoins">$0</span>
-                </div>
-                <div class="stat-row">
-                    <span class="stat-label">Time</span>
-                    <span class="stat-value" id="goTime">00:00</span>
-                </div>
-                <div class="stat-row" style="border: none;">
-                    <span class="stat-label">Best Distance</span>
-                    <span class="stat-value" style="color: var(--accent);" id="goBest">0 m</span>
-                </div>
-            </div>
-            <button class="retry-btn" id="retryBtn">RETRY</button>
-        </div>
-    </div>
+    <!-- Back to Game Button -->
+    <a href="#" class="back-to-game">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <polygon points="19 20 9 12 19 4 19 20"></polygon>
+            <line x1="5" y1="19" x2="5" y2="5"></line>
+        </svg>
+        BACK TO GAME
+    </a>
 
     <script>
-        // ==================== STARFIELD (from original design) ====================
-        const sfCanvas = document.getElementById('starfield');
-        const sfCtx = sfCanvas.getContext('2d');
-        let sfStars = [];
-        let sfShootingStars = [];
-
-        function sfResize() {
-            sfCanvas.width = window.innerWidth;
-            sfCanvas.height = window.innerHeight;
-            sfInitStars();
-        }
-
-        function sfInitStars() {
-            sfStars = [];
-            const count = Math.floor((sfCanvas.width * sfCanvas.height) / 8000);
-            for (let i = 0; i < count; i++) {
-                sfStars.push({
-                    x: Math.random() * sfCanvas.width,
-                    y: Math.random() * sfCanvas.height,
-                    r: Math.max(0.1, Math.random() * 1.5),
-                    a: Math.random() * 0.8 + 0.2,
-                    ts: Math.random() * 0.02 + 0.005,
-                    tp: Math.random() * Math.PI * 2
-                });
-            }
-        }
-
-        function sfDraw() {
-            sfCtx.clearRect(0, 0, sfCanvas.width, sfCanvas.height);
-            sfStars.forEach(s => {
-                s.tp += s.ts;
-                const tw = Math.sin(s.tp) * 0.3 + 0.7;
-                const a = s.a * tw;
-                sfCtx.beginPath();
-                sfCtx.arc(s.x, s.y, Math.max(0.1, s.r), 0, Math.PI * 2);
-                sfCtx.fillStyle = `rgba(255,255,255,${a})`;
-                sfCtx.fill();
-                if (s.r > 1) {
-                    const g = sfCtx.createRadialGradient(s.x, s.y, 0, s.x, s.y, Math.max(0.1, s.r * 3));
-                    g.addColorStop(0, `rgba(74,222,128,${a * 0.3})`);
-                    g.addColorStop(1, 'rgba(74,222,128,0)');
-                    sfCtx.beginPath();
-                    sfCtx.arc(s.x, s.y, Math.max(0.1, s.r * 3), 0, Math.PI * 2);
-                    sfCtx.fillStyle = g;
-                    sfCtx.fill();
-                }
-            });
-            // Shooting stars
-            if (Math.random() > 0.995 && sfShootingStars.length < 3) {
-                sfShootingStars.push({
-                    x: Math.random() * sfCanvas.width, y: Math.random() * sfCanvas.height * 0.5,
-                    l: Math.random() * 80 + 40, sp: Math.random() * 8 + 6,
-                    ang: Math.PI / 4 + (Math.random() - 0.5) * 0.3, a: 1
-                });
-            }
-            sfShootingStars.forEach((s, i) => {
-                const tx = s.x - Math.cos(s.ang) * s.l;
-                const ty = s.y - Math.sin(s.ang) * s.l;
-                const g = sfCtx.createLinearGradient(s.x, s.y, tx, ty);
-                g.addColorStop(0, `rgba(255,255,255,${s.a})`);
-                g.addColorStop(0.3, `rgba(74,222,128,${s.a * 0.6})`);
-                g.addColorStop(1, 'rgba(74,222,128,0)');
-                sfCtx.beginPath(); sfCtx.moveTo(s.x, s.y); sfCtx.lineTo(tx, ty);
-                sfCtx.strokeStyle = g; sfCtx.lineWidth = 2; sfCtx.stroke();
-                s.x += Math.cos(s.ang) * s.sp; s.y += Math.sin(s.ang) * s.sp; s.a -= 0.01;
-                if (s.x > sfCanvas.width || s.y > sfCanvas.height || s.a <= 0) sfShootingStars.splice(i, 1);
-            });
-        }
-
-        function sfAnimate() {
-            sfDraw();
-            requestAnimationFrame(sfAnimate);
-        }
-
-        sfResize();
-        window.addEventListener('resize', sfResize);
-        sfAnimate();
-
-        // ==================== GAME ====================
-        const canvas = document.getElementById('gameCanvas');
-        const ctx = canvas.getContext('2d');
-
-        // Constants
-        const GRAVITY = 1100;
-        const GAS_POWER = 580;
-        const BRAKE_POWER = 420;
-        const MAX_SPEED = 850;
-        const GROUND_FRICTION = 0.986;
-        const AIR_DRAG = 0.999;
-        const BOUNCE = 0.15;
-        const WORLD_BASE = 500;
-        const COIN_DIST = 45;
-
-        // State
-        let gameState = 'menu';
-        let car = null;
-        let cam = { x: 0, y: 0 };
-        let coins = [];
-        let dustPs = [];
-        let sparkPs = [];
-        let gameTime = 0;
-        let bestDist = parseInt(localStorage.getItem('hillhop_best') || '0');
-        let screenShake = 0;
-        let gasDown = false;
-        let brakeDown = false;
-        let lastTime = 0;
-        let clouds = [];
-        let bgTrees = [];
-
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-        resizeCanvas();
-        window.addEventListener('resize', resizeCanvas);
-
-        // Seeded random for consistent decoration
-        function sRand(seed) {
-            let x = Math.sin(seed * 127.1 + 311.7) * 43758.5453;
-            return x - Math.floor(x);
-        }
-
-        // ==================== TERRAIN ====================
-        function terrainY(x) {
-            if (x < 500) return WORLD_BASE;
-            const ax = x - 500;
-            const d = Math.min(2.8, ax / 3500);
-            let y = WORLD_BASE;
-            y -= Math.sin(ax * 0.00025 + 0.5) * 220;
-            y -= Math.sin(ax * 0.0007 + 1.2) * (90 + 80 * d);
-            y -= Math.sin(ax * 0.0025 + 2.5) * (45 + 40 * d);
-            y -= Math.sin(ax * 0.007 + 4.1) * (18 + 18 * d);
-            y -= Math.sin(ax * 0.018 + 6.3) * (6 + 8 * d);
-            return y;
-        }
-
-        function terrainAngle(x) {
-            const dx = 15;
-            return Math.atan2(terrainY(x + dx) - terrainY(x - dx), dx * 2);
-        }
-
-        // ==================== INIT ====================
-        function initGame() {
-            car = {
-                x: 350, y: terrainY(350) - 22,
-                vx: 0, vy: 0,
-                angle: 0, angVel: 0,
-                onGround: true, speed: 0,
-                coins: 0, distance: 0
-            };
-            cam = { x: 0, y: 0 };
-            coins = [];
-            dustPs = [];
-            sparkPs = [];
-            gameTime = 0;
-            screenShake = 0;
-
-            // Generate coins
-            for (let x = 700; x < 80000; x += 120 + sRand(x * 0.37) * 280) {
-                const ty = terrainY(x);
-                const h = 35 + sRand(x * 0.73) * 70;
-                coins.push({ x, y: ty - h, collected: false, value: sRand(x * 1.1) > 0.82 ? 50 : 10, bob: sRand(x * 2.3) * Math.PI * 2 });
-            }
-
-            // Generate clouds
-            clouds = [];
-            for (let i = 0; i < 30; i++) {
-                clouds.push({
-                    x: -500 + i * 600 + sRand(i * 3.7) * 400,
-                    y: 30 + sRand(i * 5.3) * 120,
-                    w: 80 + sRand(i * 7.1) * 140,
-                    h: 25 + sRand(i * 9.3) * 30,
-                    speed: 5 + sRand(i * 2.1) * 15
-                });
-            }
-
-            // Background trees
-            bgTrees = [];
-            for (let x = 400; x < 80000; x += 40 + sRand(x * 0.17) * 80) {
-                if (sRand(x * 0.53) > 0.35) {
-                    bgTrees.push({
-                        x: x,
-                        h: 25 + sRand(x * 0.89) * 50,
-                        w: 12 + sRand(x * 1.3) * 22,
-                        shade: sRand(x * 2.7)
-                    });
-                }
-            }
-        }
-
-        // ==================== PHYSICS ====================
-        function updatePhysics(dt) {
-            if (!car) return;
-            dt = Math.min(dt, 0.03);
-
-            // Gravity
-            car.vy += GRAVITY * dt;
-
-            if (car.onGround) {
-                const a = terrainAngle(car.x);
-                const dx = Math.cos(a);
-                const dy = Math.sin(a);
-
-                if (gasDown) {
-                    car.vx += dx * GAS_POWER * dt;
-                    car.vy += dy * GAS_POWER * dt;
-                }
-                if (brakeDown) {
-                    car.vx -= dx * BRAKE_POWER * dt;
-                    car.vy -= dy * BRAKE_POWER * dt;
-                }
-
-                car.vx *= GROUND_FRICTION;
-                car.vy *= GROUND_FRICTION;
-
-                const sp = Math.sqrt(car.vx * car.vx + car.vy * car.vy);
-                if (sp > MAX_SPEED) {
-                    car.vx *= MAX_SPEED / sp;
-                    car.vy *= MAX_SPEED / sp;
-                }
-            } else {
-                // Air control
-                if (gasDown) car.angVel -= 4.5 * dt;
-                if (brakeDown) car.angVel += 4.5 * dt;
-                car.angVel *= 0.96;
-                car.vx *= AIR_DRAG;
-            }
-
-            car.x += car.vx * dt;
-            car.y += car.vy * dt;
-            car.angle += car.angVel * dt;
-
-            // Prevent going behind start
-            if (car.x < 150) { car.x = 150; car.vx = Math.max(0, car.vx); }
-
-            // Ground collision
-            const gY = terrainY(car.x);
-            const carBottom = car.y + 22;
-
-            if (carBottom >= gY) {
-                const tA = terrainAngle(car.x);
-
-                // Flip check
-                let diff = car.angle - tA;
-                while (diff > Math.PI) diff -= Math.PI * 2;
-                while (diff < -Math.PI) diff += Math.PI * 2;
-
-                if (Math.abs(diff) > 1.6 && car.onGround === false) {
-                    triggerGameOver();
-                    return;
-                }
-
-                // Impact
-                const impV = Math.abs(car.vy);
-                if (impV > 150 && !car.onGround) {
-                    screenShake = Math.min(18, impV * 0.012);
-                    for (let i = 0; i < Math.min(12, impV * 0.015); i++) {
-                        dustPs.push({
-                            x: car.x + (Math.random() - 0.5) * 40,
-                            y: gY,
-                            vx: (Math.random() - 0.5) * 180,
-                            vy: -Math.random() * 120 - 30,
-                            life: 1, size: Math.random() * 5 + 2,
-                            color: '#a0845c'
-                        });
-                    }
-                }
-
-                car.y = gY - 22;
-
-                // Normal decomposition
-                const nx = -Math.sin(tA);
-                const ny = Math.cos(tA);
-                const nV = car.vx * nx + car.vy * ny;
-                if (nV > 0) {
-                    car.vx -= nV * nx * (1 + BOUNCE);
-                    car.vy -= nV * ny * (1 + BOUNCE);
-                }
-
-                // Align angle to terrain
-                let aDiff = tA - car.angle;
-                while (aDiff > Math.PI) aDiff -= Math.PI * 2;
-                while (aDiff < -Math.PI) aDiff += Math.PI * 2;
-                car.angle += aDiff * 0.25;
-                car.angVel *= 0.3;
-                car.onGround = true;
-            } else {
-                car.onGround = false;
-            }
-
-            // Update speed and distance
-            car.speed = Math.sqrt(car.vx * car.vx + car.vy * car.vy);
-            car.distance = Math.max(car.distance, Math.floor((car.x - 350) / 30));
-
-            // Driving dust
-            if (car.onGround && car.speed > 100 && Math.random() < car.speed / 400) {
-                dustPs.push({
-                    x: car.x - Math.cos(car.angle) * 35 + (Math.random() - 0.5) * 8,
-                    y: gY - 3,
-                    vx: -car.vx * 0.12 + (Math.random() - 0.5) * 30,
-                    vy: -Math.random() * 35 - 8,
-                    life: 1, size: Math.random() * 4 + 1.5,
-                    color: '#b89a6a'
-                });
-            }
-
-            // Coin collection
-            coins.forEach(c => {
-                if (c.collected) return;
-                const dx = car.x - c.x;
-                const dy = car.y - c.y;
-                if (Math.sqrt(dx * dx + dy * dy) < COIN_DIST) {
-                    c.collected = true;
-                    car.coins += c.value;
-                    for (let i = 0; i < 8; i++) {
-                        const a = (Math.PI * 2 / 8) * i;
-                        sparkPs.push({
-                            x: c.x, y: c.y,
-                            vx: Math.cos(a) * 90, vy: Math.sin(a) * 90,
-                            life: 1, size: 3, color: '#fbbf24'
-                        });
-                    }
-                }
-            });
-
-            // Update particles
-            dustPs.forEach(p => { p.x += p.vx * dt; p.y += p.vy * dt; p.vy += 80 * dt; p.life -= dt * 2.5; });
-            dustPs = dustPs.filter(p => p.life > 0);
-            sparkPs.forEach(p => { p.x += p.vx * dt; p.y += p.vy * dt; p.life -= dt * 3; });
-            sparkPs = sparkPs.filter(p => p.life > 0);
-
-            gameTime += dt;
-
-            // Camera
-            const tx = car.x - canvas.width * 0.3;
-            const ty = car.y - canvas.height * 0.42;
-            cam.x += (tx - cam.x) * 0.07;
-            cam.y += (ty - cam.y) * 0.06;
-
-            if (screenShake > 0) { screenShake *= 0.88; if (screenShake < 0.4) screenShake = 0; }
-        }
-
-        // ==================== RENDERING ====================
-        function drawSky() {
-            const g = ctx.createLinearGradient(0, 0, 0, canvas.height);
-            g.addColorStop(0, '#1a3a5c');
-            g.addColorStop(0.4, '#4a8bb5');
-            g.addColorStop(0.7, '#7ec8e3');
-            g.addColorStop(1, '#c5e8f0');
-            ctx.fillStyle = g;
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-        }
-
-        function drawClouds() {
-            clouds.forEach(c => {
-                const sx = c.x - cam.x * 0.08 + Math.sin(gameTime * 0.1 + c.x * 0.01) * c.speed;
-                const sy = c.y - cam.y * 0.03;
-                if (sx + c.w < -50 || sx - c.w > canvas.width + 50) return;
-                ctx.fillStyle = 'rgba(255,255,255,0.35)';
-                ctx.beginPath();
-                ctx.ellipse(sx, sy, c.w * 0.5, c.h * 0.5, 0, 0, Math.PI * 2);
-                ctx.fill();
-                ctx.beginPath();
-                ctx.ellipse(sx - c.w * 0.25, sy + 5, c.w * 0.35, c.h * 0.4, 0, 0, Math.PI * 2);
-                ctx.fill();
-                ctx.beginPath();
-                ctx.ellipse(sx + c.w * 0.28, sy + 3, c.w * 0.3, c.h * 0.38, 0, 0, Math.PI * 2);
-                ctx.fill();
-            });
-        }
-
-        function drawFarMountains() {
-            const parallax = 0.12;
-            ctx.fillStyle = '#3b5e7a';
-            ctx.beginPath();
-            ctx.moveTo(0, canvas.height);
-            for (let sx = -20; sx <= canvas.width + 20; sx += 3) {
-                const wx = sx + cam.x * parallax;
-                let h = 160 + Math.sin(wx * 0.002) * 80 + Math.sin(wx * 0.005 + 1) * 40 + Math.sin(wx * 0.0008 + 3) * 120;
-                const baseY = canvas.height * 0.48 - cam.y * parallax;
-                ctx.lineTo(sx, baseY - h);
-            }
-            ctx.lineTo(canvas.width + 20, canvas.height);
-            ctx.closePath();
-            ctx.fill();
-
-            // Snow caps
-            ctx.fillStyle = 'rgba(230,240,250,0.5)';
-            ctx.beginPath();
-            ctx.moveTo(0, canvas.height);
-            for (let sx = -20; sx <= canvas.width + 20; sx += 3) {
-                const wx = sx + cam.x * parallax;
-                let h = 160 + Math.sin(wx * 0.002) * 80 + Math.sin(wx * 0.005 + 1) * 40 + Math.sin(wx * 0.0008 + 3) * 120;
-                const baseY = canvas.height * 0.48 - cam.y * parallax;
-                const snowH = Math.max(0, h - 180) * 0.4;
-                ctx.lineTo(sx, baseY - h + (h > 180 ? 0 : h - h));
-                if (h > 200) ctx.lineTo(sx, baseY - h + 25);
-                else ctx.lineTo(sx, baseY - h);
-            }
-            ctx.lineTo(canvas.width + 20, canvas.height);
-            ctx.closePath();
-            ctx.fill();
-        }
-
-        function drawNearHills() {
-            const parallax = 0.3;
-            const baseY = canvas.height * 0.55 - cam.y * parallax;
-            ctx.fillStyle = '#2d6b3f';
-            ctx.beginPath();
-            ctx.moveTo(0, canvas.height);
-            for (let sx = -20; sx <= canvas.width + 20; sx += 4) {
-                const wx = sx + cam.x * parallax;
-                let h = 80 + Math.sin(wx * 0.003 + 2) * 50 + Math.sin(wx * 0.001) * 70 + Math.sin(wx * 0.007 + 5) * 25;
-                ctx.lineTo(sx, baseY - h);
-            }
-            ctx.lineTo(canvas.width + 20, canvas.height);
-            ctx.closePath();
-            ctx.fill();
-        }
-
-        function drawTrees() {
-            const visibleTrees = bgTrees.filter(t => {
-                const sx = t.x - cam.x;
-                return sx > -50 && sx < canvas.width + 50;
-            });
-            visibleTrees.forEach(t => {
-                const sx = t.x - cam.x;
-                const gY = terrainY(t.x) - cam.y;
-                if (gY < -100 || gY > canvas.height + 100) return;
-
-                // Trunk
-                ctx.fillStyle = '#5c3d2e';
-                ctx.fillRect(sx - 3, gY - t.h * 0.4, 6, t.h * 0.4);
-
-                // Canopy
-                const shade = t.shade;
-                ctx.fillStyle = shade > 0.5 ? '#1f7a3f' : '#28864a';
-                ctx.beginPath();
-                ctx.moveTo(sx, gY - t.h);
-                ctx.lineTo(sx - t.w * 0.5, gY - t.h * 0.35);
-                ctx.lineTo(sx + t.w * 0.5, gY - t.h * 0.35);
-                ctx.closePath();
-                ctx.fill();
-                ctx.fillStyle = shade > 0.5 ? '#23864a' : '#2d9553';
-                ctx.beginPath();
-                ctx.moveTo(sx, gY - t.h * 0.8);
-                ctx.lineTo(sx - t.w * 0.6, gY - t.h * 0.2);
-                ctx.lineTo(sx + t.w * 0.6, gY - t.h * 0.2);
-                ctx.closePath();
-                ctx.fill();
-            });
-        }
-
-        function drawTerrain() {
-            const startX = Math.floor((cam.x - 50) / 5) * 5;
-            const endX = cam.x + canvas.width + 50;
-
-            // Terrain body
-            ctx.beginPath();
-            ctx.moveTo(0, canvas.height + 10);
-            for (let wx = startX; wx <= endX; wx += 5) {
-                ctx.lineTo(wx - cam.x, terrainY(wx) - cam.y);
-            }
-            ctx.lineTo(canvas.width + 10, canvas.height + 10);
-            ctx.closePath();
-
-            const g = ctx.createLinearGradient(0, 0, 0, canvas.height);
-            g.addColorStop(0, '#8b6914');
-            g.addColorStop(0.3, '#6b4c12');
-            g.addColorStop(1, '#3d2a08');
-            ctx.fillStyle = g;
-            ctx.fill();
-
-            // Grass line
-            ctx.beginPath();
-            let first = true;
-            for (let wx = startX; wx <= endX; wx += 5) {
-                const sx = wx - cam.x;
-                const sy = terrainY(wx) - cam.y;
-                if (first) { ctx.moveTo(sx, sy); first = false; }
-                else ctx.lineTo(sx, sy);
-            }
-            ctx.strokeStyle = '#4ade80';
-            ctx.lineWidth = 4;
-            ctx.stroke();
-
-            // Grass tufts
-            for (let wx = startX; wx <= endX; wx += 20) {
-                const r = sRand(wx * 0.31);
-                if (r > 0.5) {
-                    const sx = wx - cam.x;
-                    const sy = terrainY(wx) - cam.y;
-                    ctx.strokeStyle = r > 0.75 ? '#34d399' : '#4ade80';
-                    ctx.lineWidth = 1.5;
-                    ctx.beginPath();
-                    ctx.moveTo(sx, sy);
-                    ctx.lineTo(sx - 3, sy - 6 - r * 4);
-                    ctx.moveTo(sx, sy);
-                    ctx.lineTo(sx + 3, sy - 5 - r * 3);
-                    ctx.stroke();
-                }
-            }
-
-            // Rock details
-            for (let wx = startX; wx <= endX; wx += 60) {
-                const r = sRand(wx * 0.71);
-                if (r > 0.6) {
-                    const sx = wx - cam.x;
-                    const sy = terrainY(wx) - cam.y + 10 + r * 15;
-                    ctx.fillStyle = '#5a4230';
-                    ctx.beginPath();
-                    ctx.ellipse(sx, sy, 6 + r * 8, 4 + r * 4, 0, 0, Math.PI * 2);
-                    ctx.fill();
-                }
-            }
-        }
-
-        function drawCoins() {
-            const vis = coins.filter(c => {
-                const sx = c.x - cam.x;
-                return !c.collected && sx > -30 && sx < canvas.width + 30;
-            });
-            vis.forEach(c => {
-                const sx = c.x - cam.x;
-                const sy = c.y - cam.y + Math.sin(gameTime * 3 + c.bob) * 4;
-
-                // Glow
-                const glow = ctx.createRadialGradient(sx, sy, 0, sx, sy, 18);
-                glow.addColorStop(0, 'rgba(251,191,36,0.3)');
-                glow.addColorStop(1, 'rgba(251,191,36,0)');
-                ctx.fillStyle = glow;
-                ctx.beginPath();
-                ctx.arc(sx, sy, 18, 0, Math.PI * 2);
-                ctx.fill();
-
-                // Coin body
-                ctx.fillStyle = c.value > 10 ? '#f59e0b' : '#fbbf24';
-                ctx.beginPath();
-                ctx.arc(sx, sy, 10, 0, Math.PI * 2);
-                ctx.fill();
-                ctx.strokeStyle = '#d97706';
-                ctx.lineWidth = 1.5;
-                ctx.stroke();
-
-                // Inner circle
-                ctx.strokeStyle = '#fcd34d';
-                ctx.lineWidth = 1;
-                ctx.beginPath();
-                ctx.arc(sx, sy, 6, 0, Math.PI * 2);
-                ctx.stroke();
-
-                // $ symbol
-                ctx.fillStyle = '#92400e';
-                ctx.font = 'bold 10px Orbitron, sans-serif';
-                ctx.textAlign = 'center';
-                ctx.textBaseline = 'middle';
-                ctx.fillText('$', sx, sy + 1);
-            });
-        }
-
-        function drawCar() {
-            if (!car) return;
-            const sx = car.x - cam.x;
-            const sy = car.y - cam.y;
-
-            ctx.save();
-            ctx.translate(sx, sy);
-            ctx.rotate(car.angle);
-
-            // Shadow
-            ctx.fillStyle = 'rgba(0,0,0,0.2)';
-            ctx.beginPath();
-            ctx.ellipse(0, 20, 38, 6, 0, 0, Math.PI * 2);
-            ctx.fill();
-
-            // Car body
-            ctx.fillStyle = '#7dd3fc';
-            roundRect(ctx, -35, -18, 70, 18, 4);
-            ctx.fill();
-            ctx.strokeStyle = '#38bdf8';
-            ctx.lineWidth = 1.5;
-            roundRect(ctx, -35, -18, 70, 18, 4);
-            ctx.stroke();
-
-            // Roof / cabin
-            ctx.fillStyle = '#38bdf8';
-            roundRect(ctx, -15, -32, 32, 16, 4);
-            ctx.fill();
-            ctx.strokeStyle = '#0ea5e9';
-            ctx.lineWidth = 1;
-            roundRect(ctx, -15, -32, 32, 16, 4);
-            ctx.stroke();
-
-            // Window
-            ctx.fillStyle = '#1e3a5f';
-            roundRect(ctx, -12, -29, 26, 10, 2);
-            ctx.fill();
-            // Window glare
-            ctx.fillStyle = 'rgba(125,211,252,0.3)';
-            ctx.fillRect(-10, -28, 8, 4);
-
-            // Headlight
-            ctx.fillStyle = '#fef08a';
-            ctx.beginPath();
-            ctx.ellipse(33, -12, 4, 3, 0, 0, Math.PI * 2);
-            ctx.fill();
-
-            // Rear light
-            ctx.fillStyle = '#ef4444';
-            ctx.beginPath();
-            ctx.ellipse(-33, -12, 3, 2.5, 0, 0, Math.PI * 2);
-            ctx.fill();
-
-            // Bumper
-            ctx.fillStyle = '#64748b';
-            ctx.fillRect(33, -10, 4, 6);
-            ctx.fillRect(-37, -10, 4, 6);
-
-            // Exhaust pipe
-            ctx.fillStyle = '#475569';
-            ctx.fillRect(-38, -5, 6, 3);
-
-            // Wheels
-            drawWheel(ctx, 22, 2, 9);
-            drawWheel(ctx, -22, 2, 9);
-
-            // Wheel arches
-            ctx.fillStyle = '#0c4a6e';
-            ctx.beginPath();
-            ctx.arc(22, -2, 11, Math.PI, 0);
-            ctx.fill();
-            ctx.beginPath();
-            ctx.arc(-22, -2, 11, Math.PI, 0);
-            ctx.fill();
-
-            ctx.restore();
-
-            // Exhaust particles when gas is pressed
-            if (gasDown && car.onGround && car.speed > 30) {
-                const ex = sx - Math.cos(car.angle) * 38;
-                const ey = sy - Math.sin(car.angle) * 38 + 5;
-                for (let i = 0; i < 2; i++) {
-                    dustPs.push({
-                        x: ex + cam.x, y: ey + cam.y,
-                        vx: -car.vx * 0.1 - 20 + (Math.random() - 0.5) * 20,
-                        vy: -15 - Math.random() * 20,
-                        life: 0.6, size: 2 + Math.random() * 3,
-                        color: '#94a3b8'
-                    });
-                }
-            }
-        }
-
-        function drawWheel(ctx, x, y, r) {
-            // Tire
-            ctx.fillStyle = '#1f2937';
-            ctx.beginPath();
-            ctx.arc(x, y, r, 0, Math.PI * 2);
-            ctx.fill();
-            // Hub
-            ctx.fillStyle = '#9ca3af';
-            ctx.beginPath();
-            ctx.arc(x, y, r * 0.45, 0, Math.PI * 2);
-            ctx.fill();
-            // Hub detail
-            ctx.fillStyle = '#6b7280';
-            ctx.beginPath();
-            ctx.arc(x, y, r * 0.2, 0, Math.PI * 2);
-            ctx.fill();
-            // Tread marks
-            ctx.strokeStyle = '#374151';
-            ctx.lineWidth = 1;
-            for (let i = 0; i < 4; i++) {
-                const a = (Math.PI * 2 / 4) * i + (car ? car.x * 0.05 : 0);
-                ctx.beginPath();
-                ctx.moveTo(x + Math.cos(a) * r * 0.55, y + Math.sin(a) * r * 0.55);
-                ctx.lineTo(x + Math.cos(a) * r * 0.9, y + Math.sin(a) * r * 0.9);
-                ctx.stroke();
-            }
-        }
-
-        function drawParticles() {
-            // Dust
-            dustPs.forEach(p => {
-                const sx = p.x - cam.x;
-                const sy = p.y - cam.y;
-                ctx.globalAlpha = Math.max(0, p.life);
-                ctx.fillStyle = p.color;
-                ctx.beginPath();
-                ctx.arc(sx, sy, Math.max(0.5, p.size * p.life), 0, Math.PI * 2);
-                ctx.fill();
-            });
-            ctx.globalAlpha = 1;
-
-            // Sparkles
-            sparkPs.forEach(p => {
-                const sx = p.x - cam.x;
-                const sy = p.y - cam.y;
-                ctx.globalAlpha = Math.max(0, p.life);
-                ctx.fillStyle = p.color;
-                ctx.beginPath();
-                // Star shape
-                const s = p.size * p.life;
-                ctx.moveTo(sx, sy - s * 2);
-                ctx.lineTo(sx + s * 0.5, sy - s * 0.5);
-                ctx.lineTo(sx + s * 2, sy);
-                ctx.lineTo(sx + s * 0.5, sy + s * 0.5);
-                ctx.lineTo(sx, sy + s * 2);
-                ctx.lineTo(sx - s * 0.5, sy + s * 0.5);
-                ctx.lineTo(sx - s * 2, sy);
-                ctx.lineTo(sx - s * 0.5, sy - s * 0.5);
-                ctx.closePath();
-                ctx.fill();
-            });
-            ctx.globalAlpha = 1;
-        }
-
-        function roundRect(ctx, x, y, w, h, r) {
-            r = Math.min(r, w / 2, h / 2);
-            ctx.beginPath();
-            ctx.moveTo(x + r, y);
-            ctx.lineTo(x + w - r, y);
-            ctx.quadraticCurveTo(x + w, y, x + w, y + r);
-            ctx.lineTo(x + w, y + h - r);
-            ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
-            ctx.lineTo(x + r, y + h);
-            ctx.quadraticCurveTo(x, y + h, x, y + h - r);
-            ctx.lineTo(x, y + r);
-            ctx.quadraticCurveTo(x, y, x + r, y);
-            ctx.closePath();
-        }
-
-        // ==================== FULL RENDER ====================
-        function render() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            ctx.save();
-            // Screen shake
-            if (screenShake > 0) {
-                ctx.translate((Math.random() - 0.5) * screenShake, (Math.random() - 0.5) * screenShake);
-            }
-
-            drawSky();
-            drawClouds();
-            drawFarMountains();
-            drawNearHills();
-            drawTerrain();
-            drawTrees();
-            drawCoins();
-            drawCar();
-            drawParticles();
-
-            ctx.restore();
-        }
-
-        // ==================== HUD UPDATE ====================
-        function updateHUD() {
-            if (!car) return;
-            document.getElementById('coinCount').textContent = car.coins;
-            const mins = Math.floor(gameTime / 60);
-            const secs = Math.floor(gameTime % 60);
-            document.getElementById('timerDisplay').textContent =
-                String(mins).padStart(2, '0') + ':' + String(secs).padStart(2, '0');
-            document.getElementById('distDisplay').textContent = car.distance + ' m';
-            document.getElementById('speedValue').textContent = Math.floor(car.speed * 0.36);
-        }
-
-        // ==================== GAME STATE MANAGEMENT ====================
-        function startGame() {
-            initGame();
-            gameState = 'playing';
-            document.getElementById('startScreen').style.display = 'none';
-            document.getElementById('gameOverScreen').style.display = 'none';
-            document.getElementById('hud').style.display = 'block';
-            document.getElementById('controls').style.display = 'block';
-            document.getElementById('speedDisplay').style.display = 'block';
-            document.getElementById('starfield').style.display = 'none';
-            document.getElementById('nebula').style.display = 'none';
-            lastTime = performance.now();
-        }
-
-        function triggerGameOver() {
-            gameState = 'gameover';
-            if (car.distance > bestDist) {
-                bestDist = car.distance;
-                localStorage.setItem('hillhop_best', bestDist);
-            }
-            document.getElementById('goDistance').textContent = car.distance + ' m';
-            document.getElementById('goCoins').textContent = '$' + car.coins;
-            const mins = Math.floor(gameTime / 60);
-            const secs = Math.floor(gameTime % 60);
-            document.getElementById('goTime').textContent =
-                String(mins).padStart(2, '0') + ':' + String(secs).padStart(2, '0');
-            document.getElementById('goBest').textContent = bestDist + ' m';
-            document.getElementById('gameOverScreen').style.display = 'flex';
-        }
-
-        function restartGame() {
-            startGame();
-        }
-
-        // ==================== MAIN LOOP ====================
-        function gameLoop(timestamp) {
-            requestAnimationFrame(gameLoop);
-
-            if (gameState === 'playing') {
-                const dt = Math.min((timestamp - lastTime) / 1000, 0.05);
-                lastTime = timestamp;
-                updatePhysics(dt);
-                render();
-                updateHUD();
-            } else if (gameState === 'gameover') {
-                // Keep rendering the last frame
-                render();
-            }
-        }
-        requestAnimationFrame(gameLoop);
-
-        // ==================== INPUT ====================
-        // Keyboard
-        document.addEventListener('keydown', e => {
-            if (e.key === 'ArrowUp' || e.key === 'w' || e.key === 'W') gasDown = true;
-            if (e.key === 'ArrowDown' || e.key === 's' || e.key === 'S') brakeDown = true;
-            if (e.key === 'Enter' && gameState === 'menu') startGame();
-            if (e.key === 'Enter' && gameState === 'gameover') restartGame();
-        });
-        document.addEventListener('keyup', e => {
-            if (e.key === 'ArrowUp' || e.key === 'w' || e.key === 'W') gasDown = false;
-            if (e.key === 'ArrowDown' || e.key === 's' || e.key === 'S') brakeDown = false;
+        // Mobile menu toggle
+        const menuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        let menuOpen = false;
+        
+        menuBtn.addEventListener('click', () => {
+            menuOpen = !menuOpen;
+            if (menuOpen) mobileMenu.classList.add('show');
+            else mobileMenu.classList.remove('show');
         });
 
-        // Touch / Mouse for gas button
-        const gasBtn = document.getElementById('gasBtn');
-        const brakeBtn = document.getElementById('brakeBtn');
+        // Scroll reveal for policy sections
+        const sections = document.querySelectorAll('.policy-section');
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px 0px -80px 0px',
+            threshold: 0.1
+        };
 
-        function addPressEvents(el, onDown, onUp) {
-            el.addEventListener('mousedown', e => { e.preventDefault(); onDown(); el.classList.add('pressed'); });
-            el.addEventListener('mouseup', e => { e.preventDefault(); onUp(); el.classList.remove('pressed'); });
-            el.addEventListener('mouseleave', e => { onUp(); el.classList.remove('pressed'); });
-            el.addEventListener('touchstart', e => { e.preventDefault(); onDown(); el.classList.add('pressed'); }, { passive: false });
-            el.addEventListener('touchend', e => { e.preventDefault(); onUp(); el.classList.remove('pressed'); }, { passive: false });
-            el.addEventListener('touchcancel', e => { onUp(); el.classList.remove('pressed'); });
-        }
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
 
-        addPressEvents(gasBtn, () => { gasDown = true; }, () => { gasDown = false; });
-        addPressEvents(brakeBtn, () => { brakeDown = true; }, () => { brakeDown = false; });
-
-        // Start and retry buttons
-        document.getElementById('startBtn').addEventListener('click', startGame);
-        document.getElementById('retryBtn').addEventListener('click', restartGame);
-
-        // Prevent default touch on canvas
-        canvas.addEventListener('touchstart', e => e.preventDefault(), { passive: false });
-        canvas.addEventListener('touchmove', e => e.preventDefault(), { passive: false });
+        sections.forEach(section => observer.observe(section));
     </script>
 </body>
 </html>
