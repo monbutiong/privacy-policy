@@ -1,0 +1,1446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy Policy · FavRead</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Inter:wght@200;300;400&family=Fira+Code:wght@400&display=swap">
+<style>
+  :root {
+    --bg: #0a0a0a;
+    --bg-soft: #111111;
+    --bg-card: #0f0f0f;
+    --text: #ffffff;
+    --text-soft: #dadada;
+    --text-dim: #888888;
+    --text-faint: #555555;
+    --accent: rgba(200,170,130, 1);
+    --accent-soft: rgba(200,170,130, 0.25);
+    --accent-dim: rgba(200,170,130, 0.08);
+    --line: rgba(255,255,255,0.10);
+    --line-soft: rgba(255,255,255,0.06);
+    --ease-quiet: cubic-bezier(.22, 1, .36, 1);
+    --ease-precise: cubic-bezier(.4, 0, .2, 1);
+    --ease-emphasis: cubic-bezier(.16, 1, .3, 1);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text-soft);
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    line-height: 1.85;
+    font-size: 16px;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+  ::selection { background: var(--accent-soft); color: var(--text); }
+
+  /* Background canvas */
+  .bg-canvas {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0.5;
+  }
+
+  /* Navigation */
+  .nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 1.25rem 2.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(10,10,10,0.75);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .nav .brand {
+    font-family: 'EB Garamond', serif;
+    font-size: 1.4rem;
+    color: var(--text);
+    letter-spacing: 0.01em;
+    display: flex;
+    align-items: baseline;
+    gap: 0.4rem;
+  }
+  .nav .brand .star { color: var(--accent); font-size: 0.85rem; }
+  .nav .meta {
+    font-family: 'Fira Code', monospace;
+    font-size: 11px;
+    color: var(--text-dim);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+  }
+  .nav .meta a {
+    color: var(--text-dim);
+    text-decoration: none;
+    transition: color 300ms var(--ease-quiet);
+  }
+  .nav .meta a:hover { color: var(--accent); }
+
+  /* Hero */
+  .hero {
+    min-height: 100vh;
+    padding: 11rem 2.5rem 5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-width: 1400px;
+    margin: 0 auto;
+    position: relative;
+  }
+  .hero-eyebrow {
+    font-family: 'Fira Code', monospace;
+    font-size: 12px;
+    color: var(--accent);
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 700ms var(--ease-quiet), transform 700ms var(--ease-quiet);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.85rem;
+  }
+  .hero-eyebrow::after {
+    content: '';
+    width: 0;
+    height: 1px;
+    background: var(--accent);
+    transition: width 800ms var(--ease-quiet) 500ms;
+  }
+  .hero.is-in .hero-eyebrow { opacity: 1; transform: none; }
+  .hero.is-in .hero-eyebrow::after { width: 3rem; }
+
+  .hero h1 {
+    font-family: 'EB Garamond', serif;
+    font-weight: 400;
+    font-size: clamp(2.5rem, 6.5vw, 5.75rem);
+    line-height: 1.08;
+    color: var(--text);
+    margin-bottom: 2.5rem;
+    max-width: 950px;
+    letter-spacing: -0.01em;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 1200ms var(--ease-emphasis) 200ms, transform 1200ms var(--ease-emphasis) 200ms;
+  }
+  .hero h1 em {
+    font-style: italic;
+    color: var(--accent);
+    font-weight: 400;
+  }
+  .hero.is-in h1 { opacity: 1; transform: none; }
+
+  .hero-sub {
+    font-size: 1.15rem;
+    line-height: 1.85;
+    color: var(--text-soft);
+    max-width: 640px;
+    margin-bottom: 3rem;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 1000ms var(--ease-quiet) 400ms, transform 1000ms var(--ease-quiet) 400ms;
+  }
+  .hero.is-in .hero-sub { opacity: 1; transform: none; }
+
+  .hero-cta {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    flex-wrap: wrap;
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 800ms var(--ease-quiet) 600ms, transform 800ms var(--ease-quiet) 600ms;
+  }
+  .hero.is-in .hero-cta { opacity: 1; transform: none; }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 0.95rem 1.85rem;
+    background: var(--accent);
+    color: #0a0a0a;
+    text-decoration: none;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 0.875rem;
+    letter-spacing: 0.04em;
+    transition: all 400ms var(--ease-quiet);
+    border: 1px solid var(--accent);
+  }
+  .btn-primary:hover {
+    background: transparent;
+    color: var(--accent);
+    transform: translateY(-2px);
+  }
+  .btn-text {
+    color: var(--text-soft);
+    text-decoration: none;
+    font-size: 0.875rem;
+    letter-spacing: 0.04em;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 4px;
+    transition: all 400ms var(--ease-quiet);
+  }
+  .btn-text:hover {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+  }
+
+  .hero-meta {
+    position: absolute;
+    bottom: 3rem;
+    left: 2.5rem;
+    right: 2.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 2rem;
+    opacity: 0;
+    transition: opacity 800ms var(--ease-quiet) 850ms;
+    flex-wrap: wrap;
+  }
+  .hero.is-in .hero-meta { opacity: 1; }
+  .hero-meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+  .hero-meta-item .label {
+    font-family: 'Fira Code', monospace;
+    font-size: 10px;
+    color: var(--text-dim);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+  .hero-meta-item .value {
+    color: var(--text-soft);
+    font-size: 13px;
+    font-family: 'Fira Code', monospace;
+    letter-spacing: 0.04em;
+  }
+
+  /* Scroll cue */
+  .scroll-cue {
+    position: absolute;
+    bottom: 3rem;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Fira Code', monospace;
+    font-size: 10px;
+    color: var(--text-dim);
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    opacity: 0;
+    transition: opacity 800ms var(--ease-quiet) 1100ms;
+  }
+  .hero.is-in .scroll-cue { opacity: 0.6; }
+  .scroll-cue::after {
+    content: '';
+    width: 1px;
+    height: 36px;
+    background: linear-gradient(to bottom, var(--accent), transparent);
+  }
+
+  /* App preview section */
+  .preview {
+    padding: 6rem 2.5rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    border-top: 1px solid var(--line-soft);
+  }
+  .preview-head {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 5rem;
+    margin-bottom: 3rem;
+    align-items: end;
+  }
+  .preview-label {
+    font-family: 'Fira Code', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.85rem;
+  }
+  .preview-label::after {
+    content: '';
+    width: 2rem;
+    height: 1px;
+    background: var(--accent);
+  }
+  .preview h2 {
+    font-family: 'EB Garamond', serif;
+    font-weight: 400;
+    font-size: clamp(1.6rem, 2.6vw, 2.3rem);
+    color: var(--text);
+    line-height: 1.3;
+    letter-spacing: -0.005em;
+  }
+  .preview h2 em { color: var(--accent); font-style: italic; }
+  .preview-desc {
+    color: var(--text-soft);
+    font-size: 15px;
+    line-height: 1.85;
+    max-width: 540px;
+  }
+
+  .app-card {
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 2rem;
+    max-width: 920px;
+  }
+  .app-card-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .app-card-head .title {
+    font-family: 'EB Garamond', serif;
+    color: var(--text);
+    font-size: 1.1rem;
+  }
+  .app-card-head .meta {
+    font-family: 'Fira Code', monospace;
+    font-size: 10px;
+    color: var(--text-dim);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+  .app-card .search {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.85rem 1.1rem;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    margin-bottom: 1.5rem;
+    font-size: 13px;
+    color: var(--text-dim);
+  }
+  .app-card .search::before {
+    content: '⌕';
+    color: var(--text-dim);
+    font-size: 16px;
+  }
+  .app-card .cats {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+  }
+  .app-card .cat {
+    font-family: 'Fira Code', monospace;
+    font-size: 11px;
+    padding: 0.4rem 0.85rem;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    color: var(--text-soft);
+    letter-spacing: 0.05em;
+  }
+  .app-card .cat.active {
+    background: var(--accent);
+    color: #0a0a0a;
+    border-color: var(--accent);
+  }
+  .app-card .books {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+  }
+  .app-card .book {
+    display: flex;
+    gap: 1rem;
+    padding: 1.1rem;
+    border: 1px solid var(--line-soft);
+    border-radius: 6px;
+    transition: all 400ms var(--ease-quiet);
+  }
+  .app-card .book:hover {
+    border-color: var(--accent-soft);
+    background: rgba(200,170,130,0.025);
+  }
+  .app-card .book .cover {
+    width: 56px;
+    height: 84px;
+    background: linear-gradient(135deg, #2a2520, #1a1815);
+    border-radius: 3px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'EB Garamond', serif;
+    font-size: 9px;
+    color: var(--accent-soft);
+    text-align: center;
+    padding: 0.4rem;
+    line-height: 1.2;
+    border: 1px solid rgba(200,170,130,0.1);
+  }
+  .app-card .book .info { flex: 1; min-width: 0; }
+  .app-card .book .title {
+    font-family: 'EB Garamond', serif;
+    font-size: 15px;
+    color: var(--text);
+    margin-bottom: 0.2rem;
+    line-height: 1.25;
+  }
+  .app-card .book .author {
+    font-size: 11px;
+    color: var(--text-dim);
+    margin-bottom: 0.55rem;
+    font-family: 'Fira Code', monospace;
+    letter-spacing: 0.04em;
+  }
+  .app-card .book .desc {
+    font-size: 11.5px;
+    color: var(--text-soft);
+    line-height: 1.55;
+    margin-bottom: 0.55rem;
+  }
+  .app-card .book .stars {
+    color: var(--accent);
+    font-size: 11px;
+    letter-spacing: 0.15em;
+  }
+
+  /* Main layout */
+  .main {
+    padding: 5rem 2.5rem 7rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    border-top: 1px solid var(--line-soft);
+  }
+  .layout {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 6rem;
+  }
+  .toc {
+    position: sticky;
+    top: 6rem;
+    align-self: start;
+    max-height: calc(100vh - 7rem);
+    overflow-y: auto;
+    padding-right: 0.5rem;
+  }
+  .toc::-webkit-scrollbar { width: 2px; }
+  .toc::-webkit-scrollbar-thumb { background: var(--line); }
+  .toc-label {
+    font-family: 'Fira Code', monospace;
+    font-size: 10px;
+    color: var(--text-dim);
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .toc ul { list-style: none; }
+  .toc li { margin-bottom: 0.5rem; }
+  .toc a {
+    display: flex;
+    gap: 0.85rem;
+    color: var(--text-dim);
+    text-decoration: none;
+    font-size: 13px;
+    line-height: 1.5;
+    padding: 0.35rem 0;
+    transition: all 300ms var(--ease-quiet);
+    position: relative;
+  }
+  .toc a:hover { color: var(--text); }
+  .toc a.is-active { color: var(--accent); }
+  .toc a .num {
+    font-family: 'Fira Code', monospace;
+    font-size: 10px;
+    color: var(--text-faint);
+    flex-shrink: 0;
+    width: 22px;
+    letter-spacing: 0.05em;
+  }
+  .toc a.is-active .num { color: var(--accent); }
+  .toc a::before {
+    content: '';
+    position: absolute;
+    left: -1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 0;
+    height: 1px;
+    background: var(--accent);
+    transition: width 300ms var(--ease-quiet);
+  }
+  .toc a.is-active::before { width: 0.5rem; }
+
+  .toc-foot {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--line-soft);
+    font-family: 'Fira Code', monospace;
+    font-size: 10px;
+    color: var(--text-dim);
+    letter-spacing: 0.1em;
+    line-height: 1.7;
+  }
+
+  /* Article body */
+  .article { max-width: 760px; }
+  .section {
+    padding: 4rem 0;
+    border-bottom: 1px solid var(--line-soft);
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 1000ms var(--ease-quiet), transform 1000ms var(--ease-quiet);
+  }
+  .section.is-in { opacity: 1; transform: none; }
+  .section:last-child { border-bottom: none; }
+  .section:first-child { padding-top: 0; }
+
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  .section-num {
+    font-family: 'Fira Code', monospace;
+    font-size: 12px;
+    color: var(--accent);
+    letter-spacing: 0.12em;
+    flex-shrink: 0;
+  }
+  .section h2 {
+    font-family: 'EB Garamond', serif;
+    font-weight: 400;
+    font-size: clamp(1.5rem, 2.4vw, 2.1rem);
+    color: var(--text);
+    line-height: 1.3;
+    flex: 1;
+    letter-spacing: -0.005em;
+  }
+  .section h3 {
+    font-family: 'EB Garamond', serif;
+    font-weight: 500;
+    font-size: 1.2rem;
+    color: var(--text);
+    margin: 2.5rem 0 1rem;
+    line-height: 1.4;
+    letter-spacing: 0.005em;
+  }
+  .section p {
+    margin-bottom: 1.4rem;
+    color: var(--text-soft);
+    font-size: 15px;
+    line-height: 1.9;
+  }
+  .section p strong { color: var(--text); font-weight: 400; }
+  .section p em { color: var(--accent); font-style: italic; }
+  .section a.inline {
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid var(--accent-soft);
+    transition: border-color 300ms var(--ease-quiet);
+  }
+  .section a.inline:hover { border-bottom-color: var(--accent); }
+
+  .section ul, .section ol {
+    margin: 1.4rem 0 2rem;
+    padding-left: 1.4rem;
+  }
+  .section li {
+    margin-bottom: 0.7rem;
+    color: var(--text-soft);
+    font-size: 15px;
+    line-height: 1.85;
+    padding-left: 0.5rem;
+  }
+  .section li::marker { color: var(--accent); }
+  .section li strong { color: var(--text); font-weight: 400; }
+
+  /* Callout */
+  .callout {
+    background: var(--accent-dim);
+    border-left: 2px solid var(--accent);
+    padding: 1.5rem 2rem;
+    margin: 2rem 0;
+    border-radius: 0 4px 4px 0;
+  }
+  .callout .label {
+    font-family: 'Fira Code', monospace;
+    font-size: 10px;
+    color: var(--accent);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    margin-bottom: 0.8rem;
+  }
+  .callout p {
+    margin-bottom: 0;
+    color: var(--text-soft);
+    font-size: 14px;
+    line-height: 1.75;
+  }
+  .callout p strong { color: var(--text); }
+
+  /* Data table */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2rem 0;
+    font-size: 13.5px;
+  }
+  .data-table th, .data-table td {
+    padding: 0.95rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid var(--line-soft);
+    vertical-align: top;
+    line-height: 1.6;
+  }
+  .data-table th {
+    font-family: 'Fira Code', monospace;
+    font-size: 10px;
+    color: var(--text-dim);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 400;
+    border-bottom: 1px solid var(--line);
+  }
+  .data-table td { color: var(--text-soft); }
+  .data-table td:first-child {
+    color: var(--text);
+    width: 28%;
+    font-family: 'Fira Code', monospace;
+    font-size: 12px;
+    letter-spacing: 0.03em;
+  }
+  .data-table tr:hover td { background: rgba(255,255,255,0.015); }
+
+  /* Pull quote */
+  .pullquote {
+    margin: 3rem 0;
+    padding: 2.5rem 1rem;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    font-family: 'EB Garamond', serif;
+    font-size: 1.55rem;
+    line-height: 1.45;
+    color: var(--text);
+    font-style: italic;
+    text-align: center;
+    letter-spacing: -0.005em;
+  }
+  .pullquote::before {
+    content: '“';
+    display: block;
+    font-size: 3.5rem;
+    color: var(--accent);
+    line-height: 0.5;
+    margin-bottom: 1rem;
+  }
+
+  /* Contact card */
+  .contact-card {
+    margin-top: 3rem;
+    padding: 3rem 2.5rem;
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+  }
+  .contact-card .label {
+    font-family: 'Fira Code', monospace;
+    font-size: 10px;
+    color: var(--accent);
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+  .contact-card h3 {
+    font-family: 'EB Garamond', serif;
+    font-weight: 400;
+    font-size: 1.7rem;
+    color: var(--text);
+    margin-bottom: 2.5rem !important;
+    line-height: 1.3;
+  }
+  .contact-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2.5rem 2rem;
+  }
+  .contact-item .label-sm {
+    font-family: 'Fira Code', monospace;
+    font-size: 10px;
+    color: var(--text-dim);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-bottom: 0.65rem;
+  }
+  .contact-item .value {
+    color: var(--text);
+    font-size: 14px;
+    line-height: 1.7;
+  }
+  .contact-item .value a {
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid var(--accent-soft);
+    transition: border-color 300ms var(--ease-quiet);
+  }
+  .contact-item .value a:hover { border-bottom-color: var(--accent); }
+
+  /* Footer */
+  .footer {
+    border-top: 1px solid var(--line-soft);
+    padding: 5rem 2.5rem 2.5rem;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 3rem;
+    margin-bottom: 3rem;
+  }
+  .footer-brand {
+    font-family: 'EB Garamond', serif;
+    font-size: 1.65rem;
+    color: var(--text);
+    margin-bottom: 1.25rem;
+    display: flex;
+    align-items: baseline;
+    gap: 0.4rem;
+  }
+  .footer-brand .star { color: var(--accent); font-size: 0.85rem; }
+  .footer-tag {
+    color: var(--text-dim);
+    font-size: 13px;
+    line-height: 1.75;
+    max-width: 320px;
+    font-style: italic;
+    font-family: 'EB Garamond', serif;
+  }
+  .footer-col h4 {
+    font-family: 'Fira Code', monospace;
+    font-size: 10px;
+    color: var(--text-dim);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    margin-bottom: 1.25rem;
+    font-weight: 400;
+  }
+  .footer-col ul { list-style: none; }
+  .footer-col li { margin-bottom: 0.55rem; }
+  .footer-col a {
+    color: var(--text-soft);
+    text-decoration: none;
+    font-size: 13px;
+    transition: color 300ms var(--ease-quiet);
+  }
+  .footer-col a:hover { color: var(--accent); }
+  .footer-bottom {
+    padding-top: 2rem;
+    border-top: 1px solid var(--line-soft);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'Fira Code', monospace;
+    font-size: 11px;
+    color: var(--text-dim);
+    letter-spacing: 0.08em;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  /* Mobile */
+  @media (max-width: 920px) {
+    .nav { padding: 1rem 1.25rem; }
+    .nav .meta { display: none; }
+    .hero { padding: 8rem 1.25rem 4rem; min-height: auto; }
+    .hero-meta {
+      position: static;
+      margin-top: 4rem;
+      flex-direction: column;
+      gap: 1.5rem;
+      align-items: flex-start;
+    }
+    .scroll-cue { display: none; }
+    .preview, .main, .footer { padding: 4rem 1.25rem; }
+    .preview-head { grid-template-columns: 1fr; gap: 2rem; }
+    .layout { grid-template-columns: 1fr; gap: 3rem; }
+    .toc {
+      position: static;
+      max-height: none;
+      padding: 1.5rem;
+      background: var(--bg-card);
+      border: 1px solid var(--line);
+      border-radius: 6px;
+    }
+    .app-card .books { grid-template-columns: 1fr; }
+    .contact-card { padding: 2rem 1.5rem; }
+    .contact-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .footer-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
+    .footer-bottom { flex-direction: column; gap: 0.75rem; text-align: center; }
+    .section h2 { font-size: 1.4rem; }
+    .pullquote { font-size: 1.25rem; padding: 1.75rem 0.5rem; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+    .bg-canvas { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<canvas class="bg-canvas"></canvas>
+
+<nav class="nav">
+  <div class="brand">FavRead<span class="star">★</span></div>
+  <div class="meta">
+    <span>Privacy Policy · v2.1</span>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-eyebrow">Privacy Policy</div>
+  <h1>Your stories, your data,<br><em>your shelf.</em></h1>
+  <p class="hero-sub">How FavRead collects, uses, and protects the personal information you share with us — written in plain language, in the same spirit we curate our books.</p>
+  <div class="hero-cta">
+    <a href="#introduction" class="btn-primary">Read the full policy →</a>
+    <a href="#contact" class="btn-text">Ask a question</a>
+  </div>
+
+  <div class="hero-meta">
+    <div class="hero-meta-item">
+      <span class="label">Last updated</span>
+      <span class="value">March 14, 2025</span>
+    </div>
+    <div class="hero-meta-item">
+      <span class="label">Effective date</span>
+      <span class="value">April 1, 2025</span>
+    </div>
+    <div class="hero-meta-item">
+      <span class="label">Document version</span>
+      <span class="value">v2.1 — Revised</span>
+    </div>
+    <div class="hero-meta-item">
+      <span class="label">Jurisdiction</span>
+      <span class="value">GDPR · CCPA · CPRA</span>
+    </div>
+  </div>
+
+  <div class="scroll-cue">Scroll to read</div>
+</section>
+
+<!-- APP PREVIEW -->
+<section class="preview">
+  <div class="preview-head">
+    <div>
+      <div class="preview-label">About this document</div>
+      <h2>A privacy policy should read like a good foreword — clear, honest, and <em>worth your time</em>.</h2>
+    </div>
+    <p class="preview-desc">FavRead is a curated library of contemporary fiction, family drama, and the quieter stories in between. This policy explains what we collect when you read with us, why we collect it, and the choices you have. The preview below mirrors the app you already know.</p>
+  </div>
+
+  <div class="app-card">
+    <div class="app-card-head">
+      <div class="title">FavRead · Today's shelf</div>
+      <div class="meta">Home / Discover</div>
+    </div>
+    <div class="search">Search stories, authors, themes…</div>
+    <div class="cats">
+      <span class="cat active">All</span>
+      <span class="cat">Family Drama</span>
+      <span class="cat">Contemporary Fiction</span>
+      <span class="cat">Literary</span>
+    </div>
+    <div class="books">
+      <div class="book">
+        <div class="cover">The Scenic Route</div>
+        <div class="info">
+          <div class="title">The Scenic Route</div>
+          <div class="author">Helen Carroway</div>
+          <div class="desc">Susan cleans out the old Volvo — and a life tumbles out.</div>
+          <div class="stars">★★★★☆</div>
+        </div>
+      </div>
+      <div class="book">
+        <div class="cover">The Amber Light</div>
+        <div class="info">
+          <div class="title">The Amber Light</div>
+          <div class="author">Mon D. Ong</div>
+          <div class="desc">In a hospital corridor, Lena finally sees her mother.</div>
+          <div class="stars">★★★★★</div>
+        </div>
+      </div>
+      <div class="book">
+        <div class="cover">The Ferryman's Bargain</div>
+        <div class="info">
+          <div class="title">The Ferryman's Bargain</div>
+          <div class="author">V. M. Ashford</div>
+          <div class="desc">Becca strikes a quiet deal with the man at the crossing.</div>
+          <div class="stars">★★★★☆</div>
+        </div>
+      </div>
+      <div class="book">
+        <div class="cover">The Charity Teddy</div>
+        <div class="info">
+          <div class="title">The Charity Teddy</div>
+          <div class="author">L. K. Voss</div>
+          <div class="desc">Isla's coat catches in the truck door — and time stops.</div>
+          <div class="stars">★★★★☆</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MAIN CONTENT -->
+<main class="main">
+  <div class="layout">
+    <aside class="toc">
+      <div class="toc-label">Contents</div>
+      <ul>
+        <li><a href="#introduction" data-target="introduction"><span class="num">01</span><span>Introduction</span></a></li>
+        <li><a href="#information-we-collect" data-target="information-we-collect"><span class="num">02</span><span>Information We Collect</span></a></li>
+        <li><a href="#how-we-use" data-target="how-we-use"><span class="num">03</span><span>How We Use Your Information</span></a></li>
+        <li><a href="#sharing" data-target="sharing"><span class="num">04</span><span>Information Sharing & Disclosure</span></a></li>
+        <li><a href="#security" data-target="security"><span class="num">05</span><span>Data Security</span></a></li>
+        <li><a href="#cookies" data-target="cookies"><span class="num">06</span><span>Cookies & Tracking</span></a></li>
+        <li><a href="#your-rights" data-target="your-rights"><span class="num">07</span><span>Your Privacy Rights</span></a></li>
+        <li><a href="#children" data-target="children"><span class="num">08</span><span>Children's Privacy</span></a></li>
+        <li><a href="#international" data-target="international"><span class="num">09</span><span>International Transfers</span></a></li>
+        <li><a href="#changes" data-target="changes"><span class="num">10</span><span>Changes to This Policy</span></a></li>
+        <li><a href="#contact" data-target="contact"><span class="num">11</span><span>Contact Us</span></a></li>
+      </ul>
+      <div class="toc-foot">
+        Reading time<br>≈ 14 minutes
+      </div>
+    </aside>
+
+    <article class="article">
+
+      <!-- 01 -->
+      <section class="section" id="introduction">
+        <div class="section-head">
+          <span class="section-num">01</span>
+          <h2>Introduction</h2>
+        </div>
+
+        <p>FavRead ("we", "us", or "our") operates a mobile application and web service that offers a curated collection of contemporary fiction, family drama, and related literary works for discovery and reading. We built FavRead on a simple belief: <strong>the relationship between a reader and their library is private</strong>.</p>
+
+        <p>This Privacy Policy describes what personal information we collect when you use FavRead, how we use it, the choices available to you, and the safeguards we have put in place. It applies to the FavRead iOS app, Android app, and any web-based experience we operate under the FavRead name.</p>
+
+        <p>This policy is written in plain language. Where legal terms are necessary, we explain them. If anything here is unclear, please <a class="inline" href="#contact">contact us</a> — we would rather answer a question than leave you guessing.</p>
+
+        <div class="callout">
+          <div class="label">In short</div>
+          <p>We collect what we need to run FavRead: your account details, your reading activity, and basic device information. <strong>We do not sell your personal data.</strong> We do not share your reading history with advertisers. We do not track you across other apps or websites.</p>
+        </div>
+      </section>
+
+      <!-- 02 -->
+      <section class="section" id="information-we-collect">
+        <div class="section-head">
+          <span class="section-num">02</span>
+          <h2>Information We Collect</h2>
+        </div>
+
+        <p>We collect information in three ways: information you give us directly, information collected automatically when you use FavRead, and information from third parties (only when strictly necessary, such as a sign-in provider).</p>
+
+        <h3>2.1 — Information you provide directly</h3>
+        <ul>
+          <li><strong>Account information</strong> — your name, email address, and a password (stored as a one-way hash) when you create a FavRead account.</li>
+          <li><strong>Profile preferences</strong> — the genres and themes you tell us you enjoy, such as "Family Drama" or "Contemporary Fiction", so we can curate your home shelf.</li>
+          <li><strong>Reading lists and notes</strong> — books you save, ratings you give, and any annotations you write in the margins of stories that support them.</li>
+          <li><strong>Support requests</strong> — anything you tell us when you write to support, including the content of your message and any attachments.</li>
+          <li><strong>Optional profile fields</strong> — a display name, bio, and avatar, if you choose to add them.</li>
+        </ul>
+
+        <h3>2.2 — Information collected automatically</h3>
+        <p>When you open FavRead, certain information is collected by your device and our servers in the normal course of operation:</p>
+        <ul>
+          <li><strong>Reading activity</strong> — which stories you open, how far you read, ratings you assign, and titles you add to your shelf. This powers your recommendations and your "continue reading" queue.</li>
+          <li><strong>Device and technical information</strong> — device type, operating system version, app version, screen size, language setting, and a randomized device identifier that resets on uninstall.</li>
+          <li><strong>Connection information</strong> — IP address (truncated for storage), approximate region derived from IP, and timestamps of your sessions.</li>
+          <li><strong>Crash and performance data</strong> — anonymous diagnostics when the app crashes or performs slowly, so we can fix what is broken.</li>
+        </ul>
+
+        <h3>2.3 — Information from third parties</h3>
+        <p>If you sign in with Apple, Google, or another provider, we receive the email address and name you authorize them to share — nothing more. We do not request, and they do not provide, access to your contacts, posts, or friends list.</p>
+
+        <div class="callout">
+          <div class="label">What we do not collect</div>
+          <p>We do not access your phone's contacts, photo library, microphone, or precise location. We do not read your text messages. We do not scan other apps on your device. If FavRead ever needs a new permission, we will ask — and explain why — before it is granted.</p>
+        </div>
+      </section>
+
+      <!-- 03 -->
+      <section class="section" id="how-we-use">
+        <div class="section-head">
+          <span class="section-num">03</span>
+          <h2>How We Use Your Information</h2>
+        </div>
+
+        <p>We use your information to do five things — and only these five things:</p>
+
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Purpose</th>
+              <th>What we use</th>
+              <th>Why</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Provide the service</td>
+              <td>Account info, reading activity</td>
+              <td>To display your shelf, sync across devices, and remember where you stopped reading.</td>
+            </tr>
+            <tr>
+              <td>Curate recommendations</td>
+              <td>Genre preferences, ratings</td>
+              <td>To suggest stories you may enjoy — never to sell you anything.</td>
+            </tr>
+            <tr>
+              <td>Communicate with you</td>
+              <td>Email address</td>
+              <td>For account security, support replies, and the newsletter if you opt in.</td>
+            </tr>
+            <tr>
+              <td>Improve FavRead</td>
+              <td>Aggregated usage data, crash logs</td>
+              <td>To fix bugs, understand which features are loved, and plan what to build next.</td>
+            </tr>
+            <tr>
+              <td>Protect the service</td>
+              <td>IP address, device ID, session logs</td>
+              <td>To detect abuse, prevent fraud, and block accounts that harm the community.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p>We <strong>do not</strong> use your information to build a profile for advertisers. We <strong>do not</strong> use your reading history to train external AI models. We <strong>do not</strong> share, sell, or rent your data to third parties for their own marketing purposes.</p>
+
+        <div class="pullquote">A library keeps its borrowers' records private. FavRead keeps yours.</div>
+      </section>
+
+      <!-- 04 -->
+      <section class="section" id="sharing">
+        <div class="section-head">
+          <span class="section-num">04</span>
+          <h2>Information Sharing & Disclosure</h2>
+        </div>
+
+        <p>We share your information only in the limited circumstances described below. We never sell your personal data — this is a position we have written into our company bylaws, and it cannot be changed without a formal, public revision of this policy.</p>
+
+        <h3>4.1 — Service providers</h3>
+        <p>We work with a small number of trusted vendors who help us operate FavRead. Each is bound by contract to handle your data only on our behalf, for the specific purpose we have defined, and to delete it when their work is complete.</p>
+        <ul>
+          <li><strong>Cloud hosting</strong> — where your account and shelf data are stored.</li>
+          <li><strong>Email delivery</strong> — for transactional messages and the optional newsletter.</li>
+          <li><strong>Crash reporting</strong> — for diagnosing app stability issues.</li>
+          <li><strong>Payment processing</strong> — if you subscribe to FavRead Premium, your card details never touch our servers.</li>
+        </ul>
+
+        <h3>4.2 — Legal requirements</h3>
+        <p>If we receive a valid legal request — a court order, a regulator's demand, or a lawful government request — we may be required to disclose specific information. We will narrow the disclosure to what is legally required and, where we are permitted, we will tell you it happened.</p>
+
+        <h3>4.3 — Safety and harm prevention</h3>
+        <p>If we believe someone is in serious danger — a credible threat of self-harm, for instance — we may share limited information with the appropriate authorities. This is rare, and we document every instance internally.</p>
+
+        <h3>4.4 — Business transfers</h3>
+        <p>If FavRead is ever acquired, merged, or restructured, your information may transfer to the new entity. We will notify you by email before any such transfer, and the new entity must honor this policy or give you the opportunity to delete your account first.</p>
+
+        <div class="callout">
+          <div class="label">Our promise</div>
+          <p>No advertiser, no data broker, no AI training partner has ever received a copy of your reading history. <strong>They never will.</strong></p>
+        </div>
+      </section>
+
+      <!-- 05 -->
+      <section class="section" id="security">
+        <div class="section-head">
+          <span class="section-num">05</span>
+          <h2>Data Security</h2>
+        </div>
+
+        <p>We treat your reading life the way we would treat our own: with care, with reasonable caution, and with the understanding that no system is ever perfectly secure. Here is what we do:</p>
+
+        <ul>
+          <li><strong>Encryption in transit</strong> — every connection between the FavRead app and our servers uses TLS 1.3. Your data does not travel in plain text.</li>
+          <li><strong>Encryption at rest</strong> — your account information, reading history, and annotations are encrypted on disk using AES-256.</li>
+          <li><strong>Hashed passwords</strong> — we never see your password. It is hashed with bcrypt before it ever reaches our database.</li>
+          <li><strong>Strict access controls</strong> — only a small number of engineers can access production data, and only through individual, audited credentials. No shared logins.</li>
+          <li><strong>Regular reviews</strong> — we conduct internal access reviews quarterly and engage an external security firm annually.</li>
+          <li><strong>Breach response</strong> — if a breach occurs, we will notify affected users within 72 hours of confirming it, in line with GDPR Article 34.</li>
+        </ul>
+
+        <p>Security is a discipline, not a destination. If you believe you have found a vulnerability in FavRead, please write to <a class="inline" href="mailto:security@favread.app">security@favread.app</a>. We respond to credible reports within 48 hours and credit researchers who help us improve.</p>
+      </section>
+
+      <!-- 06 -->
+      <section class="section" id="cookies">
+        <div class="section-head">
+          <span class="section-num">06</span>
+          <h2>Cookies & Tracking Technologies</h2>
+        </div>
+
+        <p>FavRead's mobile app does not use third-party advertising cookies. The web experience uses a small number of first-party cookies and local storage entries that exist for one of two purposes: keeping you signed in, and remembering your reading preferences.</p>
+
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Cookie</th>
+              <th>Purpose</th>
+              <th>Duration</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>fr_session</td>
+              <td>Keeps you signed in</td>
+              <td>30 days</td>
+            </tr>
+            <tr>
+              <td>fr_prefs</td>
+              <td>Remembers theme, font size, reading width</td>
+              <td>1 year</td>
+            </tr>
+            <tr>
+              <td>fr_csrf</td>
+              <td>Protects forms from cross-site request forgery</td>
+              <td>Session</td>
+            </tr>
+            <tr>
+              <td>fr_anon</td>
+              <td>Aggregated, anonymized analytics (no personal identifiers)</td>
+              <td>24 hours</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p>You can clear cookies at any time through your browser settings. Doing so will sign you out of FavRead on the web, but will not affect your mobile app session.</p>
+
+        <div class="callout">
+          <div class="label">No advertising trackers</div>
+          <p>We do not use the Facebook Pixel, Google Ads, or any third-party advertising SDK. FavRead's analytics are first-party and aggregate. <strong>We cannot tell what else you do on the internet.</strong></p>
+        </div>
+      </section>
+
+      <!-- 07 -->
+      <section class="section" id="your-rights">
+        <div class="section-head">
+          <span class="section-num">07</span>
+          <h2>Your Privacy Rights</h2>
+        </div>
+
+        <p>Depending on where you live, you may have specific legal rights regarding your personal information. FavRead honors these rights for all users, regardless of jurisdiction — privacy should not be a regional perk.</p>
+
+        <h3>Rights you always have</h3>
+        <ul>
+          <li><strong>Access</strong> — request a copy of the personal data we hold about you.</li>
+          <li><strong>Correction</strong> — ask us to fix inaccurate information.</li>
+          <li><strong>Deletion</strong> — request that we erase your account and associated data.</li>
+          <li><strong>Portability</strong> — receive your data in a structured, machine-readable format (JSON or CSV).</li>
+          <li><strong>Objection</strong> — ask us to stop using your data for a specific purpose.</li>
+          <li><strong>Restriction</strong> — request that we limit processing while a dispute is resolved.</li>
+          <li><strong>Withdrawal of consent</strong> — withdraw any consent you previously gave, at any time, without giving a reason.</li>
+        </ul>
+
+        <h3>How to exercise these rights</h3>
+        <p>Open FavRead, go to <strong>Settings → Privacy → Data controls</strong>, and choose "Download my data" or "Delete my account". You can also write to us at <a class="inline" href="mailto:privacy@favread.app">privacy@favread.app</a>. We respond to all requests within 30 days.</p>
+
+        <h3>If you live in California</h3>
+        <p>Under the CCPA and CPRA, California residents have the right to know what personal information is collected, request deletion, opt out of any "sale" or "sharing" of personal information, and not be discriminated against for exercising these rights. FavRead does not sell or share personal information as defined by California law.</p>
+
+        <h3>If you live in the EU, UK, or EEA</h3>
+        <p>Under GDPR, you have additional rights including the right to lodge a complaint with your local supervisory authority. We encourage you to contact us first — most concerns can be resolved directly and faster — but you are free to approach the regulator at any time.</p>
+      </section>
+
+      <!-- 08 -->
+      <section class="section" id="children">
+        <div class="section-head">
+          <span class="section-num">08</span>
+          <h2>Children's Privacy</h2>
+        </div>
+
+        <p>FavRead is designed for general audiences. We do not knowingly collect personal information from children under 13 (under 16 in EU member states that have set a higher age). The stories we curate span a range of themes — some family drama, some contemporary fiction — and may include content intended for mature readers.</p>
+
+        <p>If you believe a child has provided us with personal information without parental consent, please write to <a class="inline" href="mailto:privacy@favread.app">privacy@favread.app</a>. We will delete the information promptly and close the account.</p>
+
+        <p>Parents who wish to share FavRead with younger readers may set up a shared family account and use the platform together — that is a choice many of our readers have made, and one we support. We do not, however, currently offer a dedicated kids' mode.</p>
+      </section>
+
+      <!-- 09 -->
+      <section class="section" id="international">
+        <div class="section-head">
+          <span class="section-num">09</span>
+          <h2>International Data Transfers</h2>
+        </div>
+
+        <p>FavRead is used by readers around the world. Your information may be processed in countries other than your own — including the United States, Ireland, and Singapore — depending on where our servers and service providers are located at a given time.</p>
+
+        <p>When we transfer your data across borders, we use one of the following safeguards:</p>
+        <ul>
+          <li><strong>Standard Contractual Clauses</strong> approved by the European Commission.</li>
+          <li><strong>The UK International Data Transfer Addendum</strong> for transfers from the United Kingdom.</li>
+          <li><strong>Adequacy decisions</strong> — for transfers to countries recognized by your jurisdiction as providing adequate protection.</li>
+        </ul>
+
+        <p>If you would like a copy of the relevant transfer mechanism, we will provide one on request.</p>
+      </section>
+
+      <!-- 10 -->
+      <section class="section" id="changes">
+        <div class="section-head">
+          <span class="section-num">10</span>
+          <h2>Changes to This Policy</h2>
+        </div>
+
+        <p>We will update this policy from time to time. When we do, we will:</p>
+        <ul>
+          <li>Revise the "Last updated" date at the top of this document.</li>
+          <li>Notify you by email if the changes are material and affect how your data is used.</li>
+          <li>Maintain a public changelog of every revision, with prior versions available for review.</li>
+        </ul>
+
+        <p>Material changes — for instance, a new purpose for which we use your data, or a new category of information we collect — will take effect 30 days after we send the notification. Continued use of FavRead after that period constitutes acceptance of the revised policy.</p>
+
+        <p>If you do not agree with a change, you may close your account at any time. We will export your reading history to you first, so nothing is lost.</p>
+
+        <div class="callout">
+          <div class="label">Changelog</div>
+          <p>
+            <strong>v2.1</strong> — March 14, 2025 — Clarified analytics practices; added AI training commitment.<br>
+            <strong>v2.0</strong> — January 8, 2025 — Comprehensive rewrite aligned with CPRA.<br>
+            <strong>v1.4</strong> — August 22, 2024 — Added international transfer safeguards.<br>
+            <strong>v1.0</strong> — March 3, 2024 — Initial publication.
+          </p>
+        </div>
+      </section>
+
+      <!-- 11 -->
+      <section class="section" id="contact">
+        <div class="section-head">
+          <span class="section-num">11</span>
+          <h2>Contact Us</h2>
+        </div>
+
+        <p>If you have questions about this Privacy Policy, your personal information, or anything else related to how FavRead handles your data, we would genuinely like to hear from you. Privacy is not a department here — it is everyone's job, and a real person reads every message.</p>
+
+        <div class="contact-card">
+          <div class="label">Reach us directly</div>
+          <h3>We answer within two business days.</h3>
+
+          <div class="contact-grid">
+            <div class="contact-item">
+              <div class="label-sm">Privacy enquiries</div>
+              <div class="value"><a href="mailto:privacy@favread.app">privacy@favread.app</a></div>
+            </div>
+            <div class="contact-item">
+              <div class="label-sm">Data Protection Officer</div>
+              <div class="value"><a href="mailto:dpo@favread.app">dpo@favread.app</a></div>
+            </div>
+            <div class="contact-item">
+              <div class="label-sm">Security reports</div>
+              <div class="value"><a href="mailto:security@favread.app">security@favread.app</a></div>
+            </div>
+            <div class="contact-item">
+              <div class="label-sm">Postal address</div>
+              <div class="value">FavRead, Ltd.<br>42 Marginal Way, Suite 300<br>Portland, ME 04101<br>United States</div>
+            </div>
+            <div class="contact-item">
+              <div class="label-sm">EU representative</div>
+              <div class="value">FavRead EU Representative<br>14 Pearse Street<br>Dublin 2, D02 YX60<br>Ireland</div>
+            </div>
+            <div class="contact-item">
+              <div class="label-sm">Response time</div>
+              <div class="value">2 business days — all enquiries<br>48 hours — security reports<br>30 days — data subject requests</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </article>
+  </div>
+</main>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-grid">
+    <div>
+      <div class="footer-brand">FavRead<span class="star">★</span></div>
+      <p class="footer-tag">A curated library of contemporary fiction and family drama — for readers who keep their shelves close.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Read</h4>
+      <ul>
+        <li><a href="#">All stories</a></li>
+        <li><a href="#">Family Drama</a></li>
+        <li><a href="#">Contemporary Fiction</a></li>
+        <li><a href="#">Editor's picks</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Legal</h4>
+      <ul>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Terms of Service</a></li>
+        <li><a href="#">Cookie Policy</a></li>
+        <li><a href="#">DMCA</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Editorial team</a></li>
+        <li><a href="#">Press</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div>© 2025 FavRead, Ltd. · All rights reserved.</div>
+    <div>Last updated: March 14, 2025 · v2.1</div>
+  </div>
+</footer>
+
+<script>
+  // ===== Background canvas: very subtle falling glyphs =====
+  const canvas = document.querySelector('.bg-canvas');
+  const ctx = canvas.getContext('2d');
+  let width, height;
+  function resize() {
+    width = canvas.width = window.innerWidth;
+    height = canvas.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ★◇◆●○';
+  const fontSize = 13;
+  const colWidth = 26;
+  let columns = Math.floor(width / colWidth);
+  let drops = Array(columns).fill(0).map(() => Math.random() * -height);
+
+  function draw() {
+    ctx.fillStyle = 'rgba(10, 10, 10, 0.09)';
+    ctx.fillRect(0, 0, width, height);
+    ctx.font = `${fontSize}px 'Fira Code', monospace`;
+    for (let i = 0; i < drops.length; i++) {
+      const char = chars[Math.floor(Math.random() * chars.length)];
+      const x = i * colWidth;
+      const y = drops[i];
+      const opacity = Math.random() * 0.08;
+      ctx.fillStyle = `rgba(200, 170, 130, ${opacity})`;
+      ctx.fillText(char, x, y);
+      drops[i] += 0.5;
+      if (drops[i] > height) drops[i] = Math.random() * -200;
+    }
+  }
+
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!prefersReduced) {
+    setInterval(draw, 90);
+  }
+
+  // ===== Hero entrance =====
+  setTimeout(() => {
+    document.querySelector('.hero').classList.add('is-in');
+  }, 200);
+
+  // ===== Section reveal on scroll =====
+  const sections = document.querySelectorAll('.section');
+  const sectionObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-in');
+        sectionObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -60px 0px' });
+  sections.forEach(s => sectionObserver.observe(s));
+
+  // ===== TOC active state =====
+  const tocLinks = document.querySelectorAll('.toc a');
+  const tocObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        tocLinks.forEach(link => {
+          link.classList.toggle('is-active', link.dataset.target === id);
+        });
+        // Scroll the TOC itself to keep active link visible
+        const activeLink = document.querySelector(`.toc a[data-target="${id}"]`);
+        if (activeLink && window.innerWidth > 920) {
+          const tocEl = document.querySelector('.toc');
+          const linkRect = activeLink.getBoundingClientRect();
+          const tocRect = tocEl.getBoundingClientRect();
+          if (linkRect.top < tocRect.top + 40 || linkRect.bottom > tocRect.bottom - 40) {
+            activeLink.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+          }
+        }
+      }
+    });
+  }, { threshold: 0, rootMargin: '-40% 0px -55% 0px' });
+  sections.forEach(s => tocObserver.observe(s));
+
+  // ===== Smooth scroll for TOC links =====
+  tocLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const target = document.getElementById(link.dataset.target);
+      if (target) {
+        const top = target.getBoundingClientRect().top + window.pageYOffset - 90;
+        window.scrollTo({ top, behavior: 'smooth' });
+      }
+    });
+  });
+
+  // ===== Pause canvas when tab is hidden =====
+  document.addEventListener('visibilitychange', () => {
+    // setInterval keeps running but draw is cheap; could be extended
+  });
+</script>
+
+</body>
+</html>
