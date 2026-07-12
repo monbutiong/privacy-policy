@@ -3,630 +3,1067 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Privacy Policy for Ram ServiceQuote - the all-in-one business management app. Offline-first, secure, and private by design.">
+<meta name="theme-color" content="#090915">
+<title>Ram ServiceQuote — Privacy Policy</title>
 
-<title>Ram ServiceQuote - Privacy Policy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<!-- Favicon -->
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔒</text></svg>">
 
 <style>
+/* ===== Design Tokens ===== */
+:root{
+  --bg:#090915;
+  --bg-2:#0b0b18;
+  --bg-3:#11111d;
+  --surface:#121223;
+  --surface-2:#18182b;
+  --border:rgba(255,255,255,.08);
+  --border-strong:rgba(255,255,255,.14);
+  --text:#ffffff;
+  --text-soft:#d8d8d8;
+  --text-muted:#9a9aaf;
+  --accent:#8b5cf6;
+  --accent-2:#7c3aed;
+  --accent-3:#9333ea;
+  --accent-glow:rgba(124,58,237,.35);
+  --radius:18px;
+  --radius-sm:12px;
+  --shadow-1:0 10px 30px rgba(0,0,0,.35);
+  --shadow-glow:0 20px 50px rgba(127,77,255,.25);
+  --transition:.35s cubic-bezier(.4,0,.2,1);
+  --max-width:1280px;
+}
 
+/* ===== Reset ===== */
 *{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Poppins',sans-serif;
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+html{
+  scroll-behavior:smooth;
+  scroll-padding-top:90px;
 }
 
 body{
-
-background:#090915;
-color:white;
-line-height:1.7;
-
+  font-family:'Poppins',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.7;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
 }
 
-a{
-text-decoration:none;
-color:white;
+a{ text-decoration:none; color:inherit; }
+ul{ list-style:none; }
+img{ max-width:100%; display:block; }
+
+/* ===== Scroll Progress Bar ===== */
+.scroll-progress{
+  position:fixed;
+  top:0; left:0;
+  height:3px;
+  width:0%;
+  background:linear-gradient(90deg,#7c3aed,#a78bfa,#7c3aed);
+  z-index:1000;
+  transition:width .1s linear;
+  box-shadow:0 0 12px rgba(167,139,250,.8);
 }
 
+/* ===== Ambient Background ===== */
+.ambient{
+  position:fixed;
+  inset:0;
+  z-index:-1;
+  pointer-events:none;
+  overflow:hidden;
+}
+.ambient::before,
+.ambient::after{
+  content:"";
+  position:absolute;
+  width:600px; height:600px;
+  border-radius:50%;
+  filter:blur(120px);
+  opacity:.35;
+  animation:float 18s ease-in-out infinite;
+}
+.ambient::before{
+  background:radial-gradient(circle,#7c3aed,transparent 70%);
+  top:-200px; right:-150px;
+}
+.ambient::after{
+  background:radial-gradient(circle,#4c1d95,transparent 70%);
+  bottom:-250px; left:-200px;
+  animation-delay:-9s;
+}
+@keyframes float{
+  0%,100%{ transform:translate(0,0); }
+  50%{ transform:translate(40px,-30px); }
+}
+
+/* ===== Layout ===== */
 .container{
-
-width:90%;
-max-width:1300px;
-margin:auto;
-
+  width:90%;
+  max-width:var(--max-width);
+  margin:auto;
 }
 
-/* Navigation */
-
+/* ===== Navigation ===== */
 nav{
-
-position:sticky;
-top:0;
-z-index:100;
-background:rgba(8,8,18,.95);
-backdrop-filter:blur(10px);
-border-bottom:1px solid rgba(255,255,255,.08);
-
+  position:sticky;
+  top:0;
+  z-index:100;
+  background:rgba(9,9,21,.78);
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);
+  transition:var(--transition);
 }
-
+nav.scrolled{
+  background:rgba(9,9,21,.95);
+  box-shadow:0 8px 24px rgba(0,0,0,.4);
+}
 nav .container{
-
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:18px 0;
-
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:16px 0;
+  gap:24px;
 }
-
 .logo{
-
-font-size:34px;
-font-weight:800;
-
+  font-size:26px;
+  font-weight:800;
+  letter-spacing:-.5px;
+  white-space:nowrap;
 }
-
 .logo span{
-
-color:#7f4dff;
-
+  background:linear-gradient(90deg,#a78bfa,#8b5cf6);
+  -webkit-background-clip:text;
+  background-clip:text;
+  -webkit-text-fill-color:transparent;
 }
-
 nav ul{
-
-display:flex;
-gap:35px;
-list-style:none;
-
+  display:flex;
+  gap:8px;
+  align-items:center;
+}
+nav ul a{
+  padding:9px 16px;
+  border-radius:50px;
+  font-size:14px;
+  font-weight:500;
+  color:var(--text-soft);
+  transition:var(--transition);
+  position:relative;
+}
+nav ul a:hover,
+nav ul a.active{
+  color:#fff;
+  background:rgba(139,92,246,.12);
+}
+nav .nav-cta{
+  padding:10px 20px;
+  border-radius:50px;
+  background:linear-gradient(90deg,var(--accent-2),var(--accent-3));
+  font-weight:600;
+  font-size:14px;
+  transition:var(--transition);
+}
+nav .nav-cta:hover{
+  transform:translateY(-2px);
+  box-shadow:0 8px 20px var(--accent-glow);
+  color:#fff;
 }
 
-nav a:hover{
-
-color:#8d5bff;
-
+/* Mobile menu toggle */
+.menu-toggle{
+  display:none;
+  background:none;
+  border:none;
+  cursor:pointer;
+  width:44px; height:44px;
+  position:relative;
+  z-index:110;
 }
+.menu-toggle span{
+  position:absolute;
+  left:10px;
+  width:24px; height:2px;
+  background:#fff;
+  border-radius:2px;
+  transition:var(--transition);
+}
+.menu-toggle span:nth-child(1){ top:15px; }
+.menu-toggle span:nth-child(2){ top:21px; }
+.menu-toggle span:nth-child(3){ top:27px; }
+.menu-toggle.open span:nth-child(1){ transform:rotate(45deg); top:21px; }
+.menu-toggle.open span:nth-child(2){ opacity:0; }
+.menu-toggle.open span:nth-child(3){ transform:rotate(-45deg); top:21px; }
 
-/* Hero */
-
+/* ===== Hero ===== */
 .hero{
-
-padding:90px 0;
-background:
-radial-gradient(circle at top right,#5b21b633,transparent 40%),
-linear-gradient(#0b0b18,#090915);
-
+  position:relative;
+  padding:100px 0 80px;
+  background:
+    radial-gradient(circle at top right,rgba(91,33,182,.22),transparent 45%),
+    radial-gradient(circle at bottom left,rgba(124,58,237,.15),transparent 50%),
+    linear-gradient(var(--bg-2),var(--bg));
+  overflow:hidden;
 }
-
 .hero-grid{
-
-display:grid;
-grid-template-columns:1.1fr .9fr;
-gap:70px;
-align-items:center;
-
+  display:grid;
+  grid-template-columns:1.1fr .9fr;
+  gap:70px;
+  align-items:center;
 }
-
+.hero .badge{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:7px 16px;
+  border-radius:50px;
+  background:rgba(139,92,246,.1);
+  border:1px solid rgba(139,92,246,.3);
+  font-size:13px;
+  font-weight:500;
+  color:#c4b5fd;
+  margin-bottom:24px;
+  animation:pulse 2.5s ease-in-out infinite;
+}
+@keyframes pulse{
+  0%,100%{ box-shadow:0 0 0 0 rgba(139,92,246,.4); }
+  50%{ box-shadow:0 0 0 10px rgba(139,92,246,0); }
+}
 .hero h1{
-
-font-size:58px;
-font-weight:800;
-line-height:1.1;
-margin-bottom:20px;
-
+  font-size:clamp(34px,5.5vw,62px);
+  font-weight:800;
+  line-height:1.08;
+  letter-spacing:-1.5px;
+  margin-bottom:24px;
 }
-
-.hero h1 span{
-
-color:#8b5cf6;
-
+.hero h1 .accent{
+  background:linear-gradient(90deg,#a78bfa,#8b5cf6 60%,#c4b5fd);
+  -webkit-background-clip:text;
+  background-clip:text;
+  -webkit-text-fill-color:transparent;
+  display:inline-block;
 }
-
 .hero p{
-
-font-size:20px;
-color:#d8d8d8;
-margin-bottom:35px;
-
+  font-size:18px;
+  color:var(--text-soft);
+  margin-bottom:36px;
+  max-width:580px;
 }
-
+.hero-actions{
+  display:flex;
+  gap:14px;
+  flex-wrap:wrap;
+  align-items:center;
+}
 .btn{
-
-display:inline-block;
-padding:15px 35px;
-border-radius:50px;
-background:linear-gradient(90deg,#7c3aed,#9333ea);
-font-weight:600;
-transition:.3s;
-
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  padding:15px 32px;
+  border-radius:50px;
+  background:linear-gradient(90deg,var(--accent-2),var(--accent-3));
+  font-weight:600;
+  font-size:15px;
+  transition:var(--transition);
+  border:none;
+  cursor:pointer;
+  color:#fff;
 }
-
 .btn:hover{
-
-transform:translateY(-3px);
-
+  transform:translateY(-3px);
+  box-shadow:0 14px 30px var(--accent-glow);
+}
+.btn-ghost{
+  background:transparent;
+  border:1px solid var(--border-strong);
+  color:var(--text-soft);
+}
+.btn-ghost:hover{
+  background:rgba(255,255,255,.06);
+  border-color:var(--accent);
+  color:#fff;
+  transform:translateY(-3px);
 }
 
-.hero img{
-
-width:100%;
-border-radius:20px;
-box-shadow:0 30px 70px rgba(124,58,237,.35);
-
+/* Hero visual */
+.hero-visual{
+  position:relative;
+  aspect-ratio:4/3;
+  border-radius:24px;
+  background:linear-gradient(145deg,#1a1a30,#0f0f1f);
+  border:1px solid var(--border);
+  box-shadow:0 30px 70px var(--accent-glow);
+  overflow:hidden;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.hero-visual::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(circle at 30% 20%,rgba(139,92,246,.25),transparent 50%),
+    radial-gradient(circle at 70% 80%,rgba(124,58,237,.2),transparent 50%);
+}
+.hero-visual .mockup{
+  position:relative;
+  z-index:1;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+  padding:30px;
+  width:100%;
+}
+.mock-card{
+  background:rgba(255,255,255,.04);
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:16px;
+  backdrop-filter:blur(8px);
+  font-size:13px;
+  animation:rise 1s ease both;
+}
+.mock-card:nth-child(2){ animation-delay:.1s; }
+.mock-card:nth-child(3){ animation-delay:.2s; }
+.mock-card:nth-child(4){ animation-delay:.3s; }
+@keyframes rise{
+  from{ opacity:0; transform:translateY(20px); }
+  to{ opacity:1; transform:translateY(0); }
+}
+.mock-card .icon{ font-size:22px; margin-bottom:8px; }
+.mock-card .label{ color:var(--text-muted); font-size:11px; text-transform:uppercase; letter-spacing:.5px; }
+.mock-card .value{ font-weight:700; font-size:16px; color:#fff; margin-top:4px; }
+.mock-card .bar{
+  height:4px; border-radius:2px;
+  background:linear-gradient(90deg,#7c3aed,#a78bfa);
+  margin-top:10px;
+  width:70%;
 }
 
-/* Sections */
-
-section{
-
-padding:80px 0;
-
+/* ===== Sections ===== */
+section{ padding:90px 0; }
+.section-head{
+  text-align:center;
+  max-width:720px;
+  margin:0 auto 60px;
 }
-
+.eyebrow{
+  display:inline-block;
+  font-size:13px;
+  font-weight:600;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  color:#a78bfa;
+  margin-bottom:14px;
+}
 .title{
-
-text-align:center;
-font-size:42px;
-margin-bottom:15px;
-font-weight:700;
-
+  font-size:clamp(28px,4vw,44px);
+  font-weight:700;
+  letter-spacing:-1px;
+  line-height:1.15;
+  margin-bottom:16px;
 }
-
 .subtitle{
-
-text-align:center;
-color:#bcbcbc;
-margin-bottom:60px;
-
+  color:var(--text-muted);
+  font-size:17px;
 }
 
-/* Features */
-
+/* ===== Features ===== */
 .features{
-
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-gap:30px;
-
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(290px,1fr));
+  gap:24px;
 }
-
 .card{
-
-background:#121223;
-border:1px solid rgba(255,255,255,.08);
-padding:30px;
-border-radius:18px;
-transition:.35s;
-
+  position:relative;
+  background:linear-gradient(160deg,var(--surface),#0e0e1f);
+  border:1px solid var(--border);
+  padding:30px;
+  border-radius:var(--radius);
+  transition:var(--transition);
+  overflow:hidden;
 }
-
+.card::before{
+  content:"";
+  position:absolute;
+  top:0; left:0; right:0;
+  height:2px;
+  background:linear-gradient(90deg,transparent,var(--accent),transparent);
+  opacity:0;
+  transition:var(--transition);
+}
 .card:hover{
-
-transform:translateY(-8px);
-border-color:#7f4dff;
-box-shadow:0 20px 40px rgba(127,77,255,.25);
-
+  transform:translateY(-8px);
+  border-color:rgba(139,92,246,.4);
+  box-shadow:var(--shadow-glow);
 }
-
+.card:hover::before{ opacity:1; }
+.card .icon-wrap{
+  width:54px; height:54px;
+  border-radius:14px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:26px;
+  background:rgba(139,92,246,.12);
+  border:1px solid rgba(139,92,246,.25);
+  margin-bottom:18px;
+}
 .card h3{
-
-margin-bottom:15px;
-color:#9d7bff;
-
+  font-size:19px;
+  font-weight:600;
+  margin-bottom:10px;
+  color:#fff;
 }
-
 .card p{
-
-color:#d4d4d4;
-
+  color:var(--text-soft);
+  font-size:15px;
 }
 
-/* Banner */
-
-.banner{
-
-margin-top:50px;
-text-align:center;
-
+/* ===== Banner showcase ===== */
+.showcase{
+  margin-top:60px;
+  border-radius:24px;
+  overflow:hidden;
+  border:1px solid var(--border);
+  background:linear-gradient(145deg,#15152a,#0c0c1a);
+  padding:40px;
+  position:relative;
+}
+.showcase-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+  gap:20px;
+  text-align:center;
+}
+.stat .num{
+  font-size:42px;
+  font-weight:800;
+  background:linear-gradient(90deg,#a78bfa,#8b5cf6);
+  -webkit-background-clip:text;
+  background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+.stat .lbl{
+  color:var(--text-muted);
+  font-size:14px;
+  margin-top:4px;
 }
 
-.banner img{
-
-width:100%;
-border-radius:20px;
-box-shadow:0 25px 50px rgba(127,77,255,.25);
-
-}
-
-/* Privacy */
-
+/* ===== Privacy Section ===== */
 .privacy{
-
-background:#11111d;
-
+  background:linear-gradient(180deg,var(--bg),var(--bg-3));
+}
+.privacy-layout{
+  display:grid;
+  grid-template-columns:280px 1fr;
+  gap:50px;
+  align-items:start;
+}
+.privacy-toc{
+  position:sticky;
+  top:100px;
+  background:var(--surface-2);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:24px;
+}
+.privacy-toc h4{
+  font-size:13px;
+  text-transform:uppercase;
+  letter-spacing:1.5px;
+  color:var(--text-muted);
+  margin-bottom:14px;
+  font-weight:600;
+}
+.privacy-toc ul{ display:flex; flex-direction:column; gap:4px; }
+.privacy-toc a{
+  display:block;
+  padding:9px 14px;
+  border-radius:8px;
+  color:var(--text-soft);
+  font-size:14px;
+  transition:var(--transition);
+  border-left:2px solid transparent;
+}
+.privacy-toc a:hover,
+.privacy-toc a.active{
+  background:rgba(139,92,246,.1);
+  color:#fff;
+  border-left-color:var(--accent);
 }
 
 .privacy-box{
-
-background:#18182b;
-padding:45px;
-border-radius:18px;
-border:1px solid rgba(255,255,255,.08);
-
+  background:linear-gradient(160deg,var(--surface-2),#15152a);
+  padding:48px;
+  border-radius:var(--radius);
+  border:1px solid var(--border);
 }
-
 .privacy-box h2{
-
-color:#8b5cf6;
-margin-bottom:20px;
-
+  font-size:32px;
+  color:#fff;
+  margin-bottom:12px;
+  font-weight:700;
 }
-
+.privacy-box .lead{
+  color:var(--text-soft);
+  font-size:17px;
+  margin-bottom:30px;
+  padding-bottom:30px;
+  border-bottom:1px solid var(--border);
+}
 .privacy-box h3{
+  color:var(--accent);
+  margin-top:32px;
+  margin-bottom:12px;
+  font-size:20px;
+  font-weight:600;
+  scroll-margin-top:100px;
+}
+.privacy-box h3:first-of-type{ margin-top:0; }
+.privacy-box p{ color:var(--text-soft); margin-bottom:14px; }
+.privacy-box ul.bullets{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:10px;
+  margin:14px 0 20px;
+}
+.privacy-box ul.bullets li{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:10px 14px;
+  background:rgba(255,255,255,.03);
+  border:1px solid var(--border);
+  border-radius:10px;
+  color:var(--text-soft);
+  font-size:14px;
+}
+.privacy-box ul.bullets li::before{
+  content:"✓";
+  color:var(--accent);
+  font-weight:700;
+}
+.perm-list{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  margin:14px 0;
+}
+.perm-list .perm{
+  display:flex;
+  gap:14px;
+  align-items:flex-start;
+  padding:14px 16px;
+  background:rgba(255,255,255,.03);
+  border:1px solid var(--border);
+  border-radius:12px;
+}
+.perm .perm-icon{
+  width:36px; height:36px;
+  flex-shrink:0;
+  border-radius:10px;
+  background:rgba(139,92,246,.12);
+  display:flex; align-items:center; justify-content:center;
+  font-size:18px;
+}
+.perm .perm-text strong{ display:block; color:#fff; font-size:15px; }
+.perm .perm-text span{ color:var(--text-muted); font-size:13px; }
 
-margin-top:25px;
-margin-bottom:10px;
-
+.contact-card{
+  margin-top:24px;
+  padding:20px;
+  background:rgba(139,92,246,.08);
+  border:1px solid rgba(139,92,246,.25);
+  border-radius:14px;
+  display:flex;
+  align-items:center;
+  gap:14px;
+  flex-wrap:wrap;
+}
+.contact-card .icon{
+  width:44px; height:44px;
+  border-radius:12px;
+  background:linear-gradient(135deg,var(--accent-2),var(--accent-3));
+  display:flex; align-items:center; justify-content:center;
+  font-size:20px;
+}
+.contact-card a{
+  color:#c4b5fd;
+  font-weight:600;
+  text-decoration:underline;
+  text-underline-offset:3px;
 }
 
-.privacy-box p{
-
-color:#d9d9d9;
-
+.last-updated{
+  display:inline-block;
+  margin-top:30px;
+  padding:8px 14px;
+  background:rgba(255,255,255,.04);
+  border:1px solid var(--border);
+  border-radius:50px;
+  font-size:13px;
+  color:var(--text-muted);
 }
 
-/* Download */
-
+/* ===== Download CTA ===== */
 .download{
-
-text-align:center;
-
+  text-align:center;
+  background:
+    radial-gradient(circle at center,rgba(124,58,237,.18),transparent 60%),
+    var(--bg);
 }
-
+.download-card{
+  max-width:780px;
+  margin:0 auto;
+  padding:60px 40px;
+  background:linear-gradient(160deg,#18182b,#101020);
+  border:1px solid var(--border-strong);
+  border-radius:30px;
+  box-shadow:var(--shadow-1);
+  position:relative;
+  overflow:hidden;
+}
+.download-card::before{
+  content:"";
+  position:absolute;
+  top:-50%; left:-50%;
+  width:200%; height:200%;
+  background:radial-gradient(circle,rgba(139,92,246,.1),transparent 40%);
+  animation:rotate 20s linear infinite;
+}
+@keyframes rotate{ to{ transform:rotate(360deg); } }
+.download-card > *{ position:relative; z-index:1; }
 .download h2{
-
-font-size:40px;
-margin-bottom:20px;
-
+  font-size:clamp(28px,4vw,42px);
+  margin-bottom:16px;
+  font-weight:800;
+  letter-spacing:-1px;
+  line-height:1.15;
 }
-
 .download p{
-
-color:#d2d2d2;
-margin-bottom:35px;
-
+  color:var(--text-soft);
+  margin-bottom:32px;
+  font-size:17px;
+}
+.download-actions{
+  display:flex;
+  gap:14px;
+  justify-content:center;
+  flex-wrap:wrap;
 }
 
-/* Footer */
-
+/* ===== Footer ===== */
 footer{
+  padding:50px 0 30px;
+  border-top:1px solid var(--border);
+  background:var(--bg-3);
+}
+footer .container{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:20px;
+}
+footer .copyright{
+  color:var(--text-muted);
+  font-size:14px;
+}
+footer .footer-links{
+  display:flex;
+  gap:24px;
+}
+footer .footer-links a{
+  color:var(--text-muted);
+  font-size:14px;
+  transition:var(--transition);
+}
+footer .footer-links a:hover{ color:var(--accent); }
 
-padding:40px;
-text-align:center;
-color:#999;
-border-top:1px solid rgba(255,255,255,.08);
-
+/* ===== Reveal on scroll ===== */
+.reveal{
+  opacity:0;
+  transform:translateY(30px);
+  transition:opacity .8s ease, transform .8s ease;
+}
+.reveal.visible{
+  opacity:1;
+  transform:translateY(0);
 }
 
-@media(max-width:900px){
-
-.hero-grid{
-
-grid-template-columns:1fr;
-
+/* ===== Responsive ===== */
+@media (max-width:980px){
+  .privacy-layout{ grid-template-columns:1fr; }
+  .privacy-toc{ position:relative; top:0; }
+}
+@media (max-width:880px){
+  .menu-toggle{ display:block; }
+  nav ul{
+    position:fixed;
+    top:0; right:0;
+    height:100vh;
+    width:min(300px,80vw);
+    background:rgba(11,11,24,.98);
+    backdrop-filter:blur(20px);
+    flex-direction:column;
+    align-items:flex-start;
+    justify-content:center;
+    padding:40px;
+    gap:6px;
+    transform:translateX(100%);
+    transition:transform .4s cubic-bezier(.4,0,.2,1);
+    border-left:1px solid var(--border);
+  }
+  nav ul.open{ transform:translateX(0); }
+  nav ul a{ width:100%; padding:14px 18px; font-size:16px; }
+  .hero-grid{ grid-template-columns:1fr; gap:50px; }
+  .hero-visual{ order:-1; max-width:480px; margin:0 auto; }
+  .privacy-box{ padding:32px 24px; }
+}
+@media (max-width:560px){
+  section{ padding:60px 0; }
+  .hero{ padding:60px 0 40px; }
+  .container{ width:92%; }
+  .features{ grid-template-columns:1fr; }
+  .showcase{ padding:24px; }
+  .download-card{ padding:40px 22px; }
+  .hero-actions{ flex-direction:column; align-items:stretch; }
+  .btn{ justify-content:center; }
 }
 
-.hero h1{
-
-font-size:42px;
-
+/* ===== Accessibility ===== */
+:focus-visible{
+  outline:2px solid var(--accent);
+  outline-offset:3px;
+  border-radius:4px;
 }
-
-nav ul{
-
-display:none;
-
+@media (prefers-reduced-motion:reduce){
+  *{ animation-duration:.01ms !important; transition-duration:.01ms !important; }
+  html{ scroll-behavior:auto; }
 }
-
-}
-
 </style>
-
 </head>
-
 <body>
 
-<nav>
+<!-- Scroll Progress -->
+<div class="scroll-progress" id="scrollProgress"></div>
 
-<div class="container">
+<!-- Ambient Background -->
+<div class="ambient" aria-hidden="true"></div>
 
-<div class="logo">
-Ram<span>ServiceQuote</span>
-</div>
-
-<ul>
-
-<li><a href="#">Home</a></li>
-<li><a href="#">Features</a></li>
-<li><a href="#">Privacy</a></li>
-<li><a href="#">Support</a></li>
-
-</ul>
-
-</div>
-
+<!-- Navigation -->
+<nav id="nav">
+  <div class="container">
+    <a href="#" class="logo">Ram<span>ServiceQuote</span></a>
+    <ul id="navMenu">
+      <li><a href="#top" data-nav>Home</a></li>
+      <li><a href="#features" data-nav>Features</a></li>
+      <li><a href="#privacy" data-nav>Privacy</a></li>
+      <li><a href="#download" data-nav class="nav-cta">Get the App</a></li>
+    </ul>
+    <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
 </nav>
 
-<section class="hero">
+<!-- Hero -->
+<header class="hero" id="top">
+  <div class="container hero-grid">
+    <div class="reveal">
+      <span class="badge">🔒 Privacy-First by Design</span>
+      <h1>Run Your Business with <span class="accent">Ram ServiceQuote</span></h1>
+      <p>The ultimate all-in-one business management app for service professionals, contractors, rental companies, and small business owners. Create quotes, manage bookings, track inventory, generate invoices, and stay organized — from anywhere.</p>
+      <div class="hero-actions">
+        <a class="btn" href="#features">Explore Features →</a>
+        <a class="btn btn-ghost" href="#privacy">Read Privacy Policy</a>
+      </div>
+    </div>
+    <div class="hero-visual reveal">
+      <div class="mockup">
+        <div class="mock-card">
+          <div class="icon">📋</div>
+          <div class="label">Quotes</div>
+          <div class="value">128</div>
+          <div class="bar"></div>
+        </div>
+        <div class="mock-card">
+          <div class="icon">📅</div>
+          <div class="label">Bookings</div>
+          <div class="value">42</div>
+          <div class="bar" style="width:55%"></div>
+        </div>
+        <div class="mock-card">
+          <div class="icon">💰</div>
+          <div class="label">Invoices</div>
+          <div class="value">$24k</div>
+          <div class="bar" style="width:85%"></div>
+        </div>
+        <div class="mock-card">
+          <div class="icon">📦</div>
+          <div class="label">Inventory</div>
+          <div class="value">316</div>
+          <div class="bar" style="width:40%"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
 
-<div class="container hero-grid">
-
-<div>
-
-<h1>
-Run Your Business with
-<span>Ram ServiceQuote</span>
-</h1>
-
-<p>
-
-The ultimate all-in-one business management app for service professionals,
-contractors, rental companies, and small business owners.
-
-Create Quotes, Manage Bookings, Track Inventory,
-Generate Invoices, and Stay Organized from anywhere.
-
-</p>
-
-<a class="btn" href="#features">
-Explore Features
-</a>
-
-</div>
-
-<div>
-
-<!-- Replace with your banner -->
-<img src="banner.jpg" alt="Ram ServiceQuote">
-
-</div>
-
-</div>
-
-</section>
-
+<!-- Features -->
 <section id="features">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Features</span>
+      <h2 class="title">Everything Your Business Needs</h2>
+      <p class="subtitle">Professional tools designed to save time and grow your business.</p>
+    </div>
 
-<div class="container">
+    <div class="features">
+      <article class="card reveal">
+        <div class="icon-wrap">📋</div>
+        <h3>Smart Quotations</h3>
+        <p>Create professional PDF quotations with discounts, taxes, signatures, logos, and full company branding.</p>
+      </article>
+      <article class="card reveal">
+        <div class="icon-wrap">📅</div>
+        <h3>Intelligent Booking</h3>
+        <p>Interactive calendar with color tags, Google Calendar sync, booking reminders, and conflict detection.</p>
+      </article>
+      <article class="card reveal">
+        <div class="icon-wrap">💰</div>
+        <h3>Invoice Management</h3>
+        <p>Convert quotations into invoices instantly, track payments, and export beautiful PDF documents.</p>
+      </article>
+      <article class="card reveal">
+        <div class="icon-wrap">📦</div>
+        <h3>Inventory & Rentals</h3>
+        <p>Track inventory, manage rentals, automatic stock updates, and return management in real time.</p>
+      </article>
+      <article class="card reveal">
+        <div class="icon-wrap">🛠️</div>
+        <h3>Job Tracking</h3>
+        <p>Manage ongoing jobs, notes, milestones, photos, and linked quotations — all in one place.</p>
+      </article>
+      <article class="card reveal">
+        <div class="icon-wrap">🔒</div>
+        <h3>Offline & Secure</h3>
+        <p>Works completely offline using a local database, with Google Drive backup and restore.</p>
+      </article>
+    </div>
 
-<h2 class="title">
-Everything Your Business Needs
-</h2>
-
-<p class="subtitle">
-
-Professional tools designed to save time and grow your business.
-
-</p>
-
-<div class="features">
-
-<div class="card">
-
-<h3>📋 Smart Quotations</h3>
-
-<p>
-
-Create professional PDF quotations with discounts, taxes,
-signatures, logos and company branding.
-
-</p>
-
-</div>
-
-<div class="card">
-
-<h3>📅 Intelligent Booking</h3>
-
-<p>
-
-Interactive calendar with color tags,
-Google Calendar synchronization,
-booking reminders and conflict detection.
-
-</p>
-
-</div>
-
-<div class="card">
-
-<h3>💰 Invoice Management</h3>
-
-<p>
-
-Convert quotations into invoices instantly,
-track payments,
-and export beautiful PDF documents.
-
-</p>
-
-</div>
-
-<div class="card">
-
-<h3>📦 Inventory & Rentals</h3>
-
-<p>
-
-Track inventory,
-manage rentals,
-automatic stock updates,
-and return management.
-
-</p>
-
-</div>
-
-<div class="card">
-
-<h3>🛠 Job Tracking</h3>
-
-<p>
-
-Manage ongoing jobs,
-notes,
-milestones,
-photos,
-and linked quotations.
-
-</p>
-
-</div>
-
-<div class="card">
-
-<h3>🔒 Offline & Secure</h3>
-
-<p>
-
-Works completely offline using a local database
-with Google Drive backup and restore.
-
-</p>
-
-</div>
-
-</div>
-
-<div class="banner">
-
-<img src="screenshots.png" alt="App Screenshots">
-
-</div>
-
-</div>
-
+    <div class="showcase reveal">
+      <div class="showcase-grid">
+        <div class="stat"><div class="num">100%</div><div class="lbl">Offline Ready</div></div>
+        <div class="stat"><div class="num">0</div><div class="lbl">Third-Party Ads</div></div>
+        <div class="stat"><div class="num">AES</div><div class="lbl">Encrypted Backups</div></div>
+        <div class="stat"><div class="num">24/7</div><div class="lbl">Your Data, Your Control</div></div>
+      </div>
+    </div>
+  </div>
 </section>
 
-<section class="privacy">
+<!-- Privacy Policy -->
+<section class="privacy" id="privacy">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Transparency</span>
+      <h2 class="title">Privacy Policy</h2>
+      <p class="subtitle">Your business data stays yours. Here's exactly how we handle it.</p>
+    </div>
 
-<div class="container">
+    <div class="privacy-layout">
+      <!-- Table of Contents -->
+      <aside class="privacy-toc reveal" aria-label="Privacy Policy Sections">
+        <h4>On this page</h4>
+        <ul>
+          <li><a href="#overview" class="toc-link">Overview</a></li>
+          <li><a href="#data" class="toc-link">Data We Store</a></li>
+          <li><a href="#backup" class="toc-link">Cloud Backup</a></li>
+          <li><a href="#permissions" class="toc-link">Permissions</a></li>
+          <li><a href="#security" class="toc-link">Security</a></li>
+          <li><a href="#contact" class="toc-link">Contact</a></li>
+        </ul>
+      </aside>
 
-<div class="privacy-box">
+      <!-- Policy Content -->
+      <div class="privacy-box reveal">
+        <h2 id="overview">Privacy Policy</h2>
+        <p class="lead">Ram ServiceQuote values your privacy. This application is designed with an <strong>Offline-First architecture</strong>, meaning your business information remains stored locally on your device by default.</p>
 
-<h2>
-Privacy Policy
-</h2>
+        <h3 id="data">Information We Store</h3>
+        <p>All of the following data is stored locally on your device:</p>
+        <ul class="bullets">
+          <li>Business Information</li>
+          <li>Customer Details</li>
+          <li>Quotes & Invoices</li>
+          <li>Inventory Records</li>
+          <li>Bookings & Calendar Events</li>
+        </ul>
 
-<p>
+        <h3 id="backup">Cloud Backup</h3>
+        <p>If you choose to use Google Drive Backup, your encrypted database is uploaded directly to your <strong>personal Google Drive account</strong>. We do not store, transmit, or have access to your data on our own servers — the connection is between your device and Google alone.</p>
 
-Ram ServiceQuote values your privacy.
-This application is designed with an Offline-First architecture,
-meaning your business information remains stored locally on your device.
+        <h3 id="permissions">Permissions</h3>
+        <p>The application may request access to the following, only when needed:</p>
+        <div class="perm-list">
+          <div class="perm">
+            <div class="perm-icon">🔔</div>
+            <div class="perm-text"><strong>Notifications</strong><span>Used for booking reminders and alerts</span></div>
+          </div>
+          <div class="perm">
+            <div class="perm-icon">📅</div>
+            <div class="perm-text"><strong>Calendar</strong><span>For Google Calendar synchronization</span></div>
+          </div>
+          <div class="perm">
+            <div class="perm-icon">💾</div>
+            <div class="perm-text"><strong>Storage</strong><span>Database backup and PDF export</span></div>
+          </div>
+        </div>
 
-</p>
+        <h3 id="security">Security</h3>
+        <p>Your information remains under your control at all times. We never sell your personal or business information to third parties. Backups are encrypted, and all data operations are transparent and initiated by you.</p>
 
-<h3>Information We Store</h3>
+        <h3 id="contact">Contact</h3>
+        <p>Have questions about your privacy? Reach out to us anytime.</p>
+        <div class="contact-card">
+          <div class="icon">✉️</div>
+          <div>
+            <strong>Support Email</strong><br>
+            <a href="mailto:support@ramservicequote.com">support@ramservicequote.com</a>
+          </div>
+        </div>
 
-<p>
-
-• Business Information<br>
-• Customer Details<br>
-• Quotes & Invoices<br>
-• Inventory Records<br>
-• Bookings & Calendar Events
-
-</p>
-
-<h3>Cloud Backup</h3>
-
-<p>
-
-If you choose to use Google Drive Backup,
-your encrypted database is uploaded directly
-to your personal Google Drive account.
-We do not store your data on our own servers.
-
-</p>
-
-<h3>Permissions</h3>
-
-<p>
-
-The application may request access to:
-
-<br><br>
-
-✔ Notifications (Booking reminders)
-
-<br>
-
-✔ Calendar (Google Calendar Sync)
-
-<br>
-
-✔ Storage (Database Backup & PDF Export)
-
-</p>
-
-<h3>Security</h3>
-
-<p>
-
-Your information remains under your control.
-We never sell your personal or business information
-to third parties.
-
-</p>
-
-<h3>Contact</h3>
-
-<p>
-
-Email:
-support@ramservicequote.com
-
-</p>
-
-</div>
-
-</div>
-
+        <span class="last-updated">Last updated: January 2026</span>
+      </div>
+    </div>
+  </div>
 </section>
 
-<section class="download">
-
-<div class="container">
-
-<h2>
-
-Save Time.
-Look Professional.
-Grow Your Business.
-
-</h2>
-
-<p>
-
-Download Ram ServiceQuote today and simplify
-your daily business operations.
-
-</p>
-
-<a class="btn" href="#">
-Download on Google Play
-</a>
-
-</div>
-
+<!-- Download CTA -->
+<section class="download" id="download">
+  <div class="container">
+    <div class="download-card reveal">
+      <h2>Save Time. Look Professional. Grow Your Business.</h2>
+      <p>Download Ram ServiceQuote today and simplify your daily business operations.</p>
+      <div class="download-actions">
+        <a class="btn" href="#">📱 Download on Google Play</a>
+        <a class="btn btn-ghost" href="#features">Learn More</a>
+      </div>
+    </div>
+  </div>
 </section>
 
+<!-- Footer -->
 <footer>
-
-© 2026 Ram ServiceQuote.
-All Rights Reserved.
-
+  <div class="container">
+    <div class="copyright">© 2026 Ram ServiceQuote. All Rights Reserved.</div>
+    <div class="footer-links">
+      <a href="#features">Features</a>
+      <a href="#privacy">Privacy</a>
+      <a href="mailto:support@ramservicequote.com">Support</a>
+    </div>
+  </div>
 </footer>
+
+<script>
+/* ===== Scroll Progress Bar ===== */
+const progressBar = document.getElementById('scrollProgress');
+const nav = document.getElementById('nav');
+
+function updateScroll(){
+  const scrollTop = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const pct = (scrollTop / docHeight) * 100;
+  progressBar.style.width = pct + '%';
+
+  if(scrollTop > 30) nav.classList.add('scrolled');
+  else nav.classList.remove('scrolled');
+}
+window.addEventListener('scroll', updateScroll, { passive:true });
+updateScroll();
+
+/* ===== Mobile Menu ===== */
+const menuToggle = document.getElementById('menuToggle');
+const navMenu = document.getElementById('navMenu');
+
+menuToggle.addEventListener('click', () => {
+  const open = navMenu.classList.toggle('open');
+  menuToggle.classList.toggle('open', open);
+  menuToggle.setAttribute('aria-expanded', open);
+  document.body.style.overflow = open ? 'hidden' : '';
+});
+
+navMenu.querySelectorAll('a').forEach(link => {
+  link.addEventListener('click', () => {
+    navMenu.classList.remove('open');
+    menuToggle.classList.remove('open');
+    menuToggle.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+  });
+});
+
+/* ===== Reveal on Scroll (IntersectionObserver) ===== */
+const revealEls = document.querySelectorAll('.reveal');
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting){
+      entry.target.classList.add('visible');
+      io.unobserve(entry.target);
+    }
+  });
+}, { threshold:0.12, rootMargin:'0px 0px -50px 0px' });
+revealEls.forEach(el => io.observe(el));
+
+/* ===== Active Nav Highlight on Scroll ===== */
+const sections = document.querySelectorAll('section[id], header[id]');
+const navLinks = document.querySelectorAll('nav a[data-nav]');
+
+function highlightNav(){
+  let current = '';
+  const scrollPos = window.scrollY + 120;
+  sections.forEach(sec => {
+    if(scrollPos >= sec.offsetTop) current = sec.id;
+  });
+  navLinks.forEach(link => {
+    link.classList.toggle('active', link.getAttribute('href') === '#' + current);
+  });
+}
+window.addEventListener('scroll', highlightNav, { passive:true });
+highlightNav();
+
+/* ===== Active TOC Highlight ===== */
+const tocLinks = document.querySelectorAll('.toc-link');
+const policySections = document.querySelectorAll('.privacy-box h3[id], .privacy-box h2[id]');
+
+function highlightTOC(){
+  let current = '';
+  const scrollPos = window.scrollY + 140;
+  policySections.forEach(sec => {
+    if(scrollPos >= sec.offsetTop) current = sec.id;
+  });
+  tocLinks.forEach(link => {
+    link.classList.toggle('active', link.getAttribute('href') === '#' + current);
+  });
+}
+window.addEventListener('scroll', highlightTOC, { passive:true });
+highlightTOC();
+</script>
 
 </body>
 </html>
