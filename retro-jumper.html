@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Privacy Policy | Retro Jumper</title>
+
+    <meta name="description"
+          content="Privacy Policy for Retro Jumper - a retro-style pixel platform jumping game.">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap');
+
+        :root {
+            --blue: #1677c8;
+            --dark-blue: #071426;
+            --panel: #0b1d31;
+            --panel-light: #123452;
+            --yellow: #ffd928;
+            --orange: #ff9f1c;
+            --red: #ed3b32;
+            --green: #8ed21c;
+            --white: #f4f7ff;
+            --muted: #a9bdd1;
+            --border: #2d6fa4;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            color: var(--white);
+            font-family: 'VT323', monospace;
+            font-size: 20px;
+            line-height: 1.45;
+            background:
+                linear-gradient(rgba(255,255,255,.025) 50%, transparent 50%),
+                linear-gradient(90deg, rgba(255,255,255,.015), transparent);
+            background-size: 100% 4px, 4px 100%;
+            background-color: #071426;
+            min-height: 100vh;
+        }
+
+        /* CRT glow */
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 999;
+            background:
+                radial-gradient(
+                    ellipse at center,
+                    transparent 45%,
+                    rgba(0,0,0,.4) 100%
+                );
+        }
+
+        /* Pixel background */
+        .background {
+            position: fixed;
+            inset: 0;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .cloud {
+            position: absolute;
+            width: 110px;
+            height: 32px;
+            background: #dcecff;
+            border-radius: 30px;
+            opacity: .12;
+        }
+
+        .cloud::before,
+        .cloud::after {
+            content: "";
+            position: absolute;
+            background: #dcecff;
+            border-radius: 50%;
+        }
+
+        .cloud::before {
+            width: 45px;
+            height: 45px;
+            left: 18px;
+            bottom: 8px;
+        }
+
+        .cloud::after {
+            width: 60px;
+            height: 55px;
+            right: 15px;
+            bottom: 5px;
+        }
+
+        .cloud:nth-child(1) {
+            top: 15%;
+            left: 5%;
+        }
+
+        .cloud:nth-child(2) {
+            top: 42%;
+            right: 3%;
+            transform: scale(1.3);
+        }
+
+        .cloud:nth-child(3) {
+            top: 72%;
+            left: 15%;
+            transform: scale(.8);
+        }
+
+        .coin {
+            position: absolute;
+            width: 22px;
+            height: 22px;
+            background: var(--yellow);
+            border: 4px solid #a87800;
+            box-shadow: 0 0 12px rgba(255,217,40,.5);
+            image-rendering: pixelated;
+        }
+
+        .coin:nth-child(4) {
+            top: 20%;
+            right: 12%;
+        }
+
+        .coin:nth-child(5) {
+            top: 67%;
+            right: 20%;
+        }
+
+        .coin:nth-child(6) {
+            top: 85%;
+            left: 7%;
+        }
+
+        /* Header */
+        header {
+            position: relative;
+            text-align: center;
+            padding: 50px 20px 70px;
+            background:
+                linear-gradient(
+                    to bottom,
+                    rgba(20,105,180,.9),
+                    rgba(7,20,38,.96)
+                );
+            border-bottom: 5px solid #050b14;
+            box-shadow: 0 10px 0 rgba(0,0,0,.35);
+        }
+
+        .logo {
+            display: inline-block;
+            padding: 10px 18px;
+            margin-bottom: 15px;
+            font-family: 'Press Start 2P', monospace;
+            font-size: clamp(30px, 7vw, 65px);
+            line-height: 1;
+            letter-spacing: -4px;
+            color: var(--yellow);
+            text-shadow:
+                5px 5px 0 #111,
+                8px 8px 0 #000;
+        }
+
+        .logo span {
+            display: block;
+            color: #32c8ff;
+            margin-top: 12px;
+        }
+
+        .tagline {
+            color: #fff;
+            font-size: 25px;
+            margin: 20px 0;
+            text-shadow: 3px 3px #000;
+        }
+
+        .badge {
+            display: inline-block;
+            background: var(--red);
+            color: #fff;
+            border: 4px solid #111;
+            box-shadow: 5px 5px 0 #000;
+            padding: 10px 18px;
+            font-family: 'Press Start 2P', monospace;
+            font-size: 11px;
+            transform: rotate(-2deg);
+        }
+
+        /* Navigation */
+        .nav {
+            max-width: 1000px;
+            margin: -28px auto 35px;
+            padding: 14px;
+            position: relative;
+            z-index: 2;
+            background: var(--panel);
+            border: 4px solid #000;
+            box-shadow:
+                0 0 0 3px var(--border),
+                8px 8px 0 rgba(0,0,0,.6);
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .nav a {
+            color: var(--yellow);
+            text-decoration: none;
+            padding: 8px 14px;
+            font-family: 'Press Start 2P', monospace;
+            font-size: 9px;
+            border: 2px solid transparent;
+        }
+
+        .nav a:hover {
+            border-color: var(--yellow);
+            background: #142c47;
+        }
+
+        /* Main */
+        main {
+            width: min(1000px, calc(100% - 30px));
+            margin: auto;
+            padding-bottom: 80px;
+        }
+
+        .intro {
+            text-align: center;
+            margin-bottom: 30px;
+            color: var(--muted);
+        }
+
+        .intro strong {
+            color: var(--yellow);
+        }
+
+        /* Section cards */
+        .card {
+            position: relative;
+            margin: 28px 0;
+            padding: 30px;
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(17,52,82,.97),
+                    rgba(7,22,38,.98)
+                );
+            border: 4px solid #050b14;
+            box-shadow:
+                0 0 0 3px var(--border),
+                8px 8px 0 rgba(0,0,0,.65);
+        }
+
+        .card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: var(--yellow);
+        }
+
+        .card h2 {
+            margin-top: 0;
+            color: var(--yellow);
+            font-family: 'Press Start 2P', monospace;
+            font-size: clamp(14px, 2vw, 20px);
+            line-height: 1.5;
+            text-shadow: 3px 3px #000;
+        }
+
+        .card h2::before {
+            content: "★ ";
+            color: var(--orange);
+        }
+
+        .card p {
+            margin: 12px 0;
+        }
+
+        .card ul {
+            padding-left: 25px;
+        }
+
+        .card li {
+            margin: 8px 0;
+        }
+
+        .card li::marker {
+            color: var(--yellow);
+        }
+
+        .highlight {
+            color: var(--yellow);
+            font-weight: bold;
+        }
+
+        .green {
+            color: var(--green);
+        }
+
+        /* Info boxes */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .info-box {
+            padding: 22px;
+            background: #081727;
+            border: 3px solid var(--border);
+            box-shadow: 5px 5px 0 #000;
+        }
+
+        .info-box h3 {
+            margin-top: 0;
+            color: #32c8ff;
+            font-family: 'Press Start 2P', monospace;
+            font-size: 12px;
+        }
+
+        /* Pixel platform */
+        .platform {
+            height: 25px;
+            margin: 35px auto;
+            max-width: 500px;
+            background:
+                repeating-linear-gradient(
+                    90deg,
+                    #b66a2d 0 55px,
+                    #8b4b22 55px 58px
+                );
+            border: 4px solid #4c2814;
+            box-shadow:
+                inset 0 4px 0 #d58a45,
+                5px 5px 0 #000;
+        }
+
+        /* Contact */
+        .contact {
+            text-align: center;
+            background: #102b42;
+            border-color: var(--yellow);
+        }
+
+        .contact h2 {
+            color: #32c8ff;
+        }
+
+        .email {
+            display: inline-block;
+            padding: 12px 18px;
+            margin-top: 10px;
+            background: var(--yellow);
+            color: #111;
+            text-decoration: none;
+            font-family: 'Press Start 2P', monospace;
+            font-size: 11px;
+            border: 4px solid #000;
+            box-shadow: 5px 5px 0 #000;
+        }
+
+        .email:hover {
+            transform: translate(3px, 3px);
+            box-shadow: 2px 2px 0 #000;
+        }
+
+        /* Footer */
+        footer {
+            padding: 30px 20px 50px;
+            text-align: center;
+            border-top: 5px solid #000;
+            background: #050d18;
+            color: #718aa0;
+        }
+
+        .footer-title {
+            font-family: 'Press Start 2P', monospace;
+            color: var(--yellow);
+            font-size: 12px;
+            margin-bottom: 15px;
+        }
+
+        .footer-icons {
+            font-size: 28px;
+            margin-bottom: 15px;
+            letter-spacing: 12px;
+        }
+
+        .copyright {
+            font-size: 17px;
+        }
+
+        /* Mobile */
+        @media (max-width: 700px) {
+
+            body {
+                font-size: 18px;
+            }
+
+            header {
+                padding: 35px 15px 55px;
+            }
+
+            .logo {
+                font-size: 35px;
+                letter-spacing: -2px;
+            }
+
+            .tagline {
+                font-size: 21px;
+            }
+
+            .nav {
+                margin-left: 15px;
+                margin-right: 15px;
+            }
+
+            .card {
+                padding: 22px 18px;
+                box-shadow:
+                    0 0 0 2px var(--border),
+                    5px 5px 0 rgba(0,0,0,.65);
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .badge {
+                font-size: 9px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="background">
+    <div class="cloud"></div>
+    <div class="cloud"></div>
+    <div class="cloud"></div>
+
+    <div class="coin"></div>
+    <div class="coin"></div>
+    <div class="coin"></div>
+</div>
+
+<header>
+
+    <div class="logo">
+        RETRO
+        <span>JUMPER</span>
+    </div>
+
+    <div class="tagline">
+        ★ PRIVACY POLICY ★
+    </div>
+
+    <div class="badge">
+        PLAYER PRIVACY MATTERS!
+    </div>
+
+</header>
+
+<nav class="nav">
+    <a href="#overview">START</a>
+    <a href="#data">DATA</a>
+    <a href="#thirdparty">SERVICES</a>
+    <a href="#security">SECURITY</a>
+    <a href="#contact">CONTACT</a>
+</nav>
+
+<main>
+
+    <div class="intro">
+        Welcome, jumper! 👾<br>
+        This Privacy Policy explains how <strong>Retro Jumper</strong>
+        handles information when you play the game.
+        <br><br>
+        <strong>Last Updated:</strong> August 23, 2026
+    </div>
+
+    <section class="card" id="overview">
+        <h2>1. Welcome to Retro Jumper</h2>
+
+        <p>
+            Retro Jumper is a retro-style platform jumping game where
+            players jump from platform to platform, collect coins,
+            overcome obstacles, and try to reach the top.
+        </p>
+
+        <p>
+            We respect your privacy and aim to collect only information
+            that is necessary to operate, improve, and support the game.
+        </p>
+
+        <p>
+            By downloading or playing Retro Jumper, you acknowledge this
+            Privacy Policy.
+        </p>
+    </section>
+
+
+    <section class="card" id="data">
+        <h2>2. Information We Collect</h2>
+
+        <p>
+            Depending on the version of the game and the services enabled,
+            Retro Jumper may collect or process certain information.
+        </p>
+
+        <div class="grid">
+
+            <div class="info-box">
+                <h3>🎮 GAME DATA</h3>
+
+                <p>
+                    The game may store gameplay-related information such as:
+                </p>
+
+                <ul>
+                    <li>High scores</li>
+                    <li>Game progress</li>
+                    <li>Unlocked characters</li>
+                    <li>Customization settings</li>
+                    <li>Game preferences</li>
+                </ul>
+            </div>
+
+            <div class="info-box">
+                <h3>📱 DEVICE DATA</h3>
+
+                <p>
+                    Certain technical information may be automatically
+                    processed by the game or third-party services, such as:
+                </p>
+
+                <ul>
+                    <li>Device type</li>
+                    <li>Operating system version</li>
+                    <li>App version</li>
+                    <li>General technical information</li>
+                    <li>Crash information</li>
+                </ul>
+            </div>
+
+        </div>
+    </section>
+
+
+    <section class="card">
+        <h2>3. How We Use Information</h2>
+
+        <p>
+            Information may be used to:
+        </p>
+
+        <ul>
+            <li>Provide and operate Retro Jumper.</li>
+            <li>Save gameplay progress and preferences.</li>
+            <li>Improve game performance and stability.</li>
+            <li>Identify and fix technical problems.</li>
+            <li>Understand how the game is being used.</li>
+            <li>Prevent abuse or fraudulent activity.</li>
+            <li>Improve future game updates and features.</li>
+        </ul>
+
+        <p class="highlight">
+            We do not sell your personal information.
+        </p>
+    </section>
+
+
+    <section class="card" id="thirdparty">
+        <h2>4. Third-Party Services</h2>
+
+        <p>
+            Retro Jumper may use third-party services to provide certain
+            functionality, such as advertising, analytics, crash
+            reporting, authentication, cloud storage, or other technical
+            services.
+        </p>
+
+        <p>
+            These services may process certain technical information
+            according to their own privacy policies.
+        </p>
+
+        <p>
+            Examples may include services such as:
+        </p>
+
+        <ul>
+            <li>Google Play Services</li>
+            <li>Advertising services</li>
+            <li>Analytics services</li>
+            <li>Crash reporting services</li>
+        </ul>
+
+        <p>
+            <span class="highlight">Important:</span>
+            Only list services here that your actual application uses.
+        </p>
+    </section>
+
+
+    <section class="card">
+        <h2>5. Advertising</h2>
+
+        <p>
+            If advertisements are included in Retro Jumper, advertising
+            providers may collect certain information to display and
+            measure advertisements.
+        </p>
+
+        <p>
+            Advertising providers may use technologies such as advertising
+            identifiers, cookies, or similar technologies where permitted.
+        </p>
+
+        <p>
+            The exact information collected depends on the advertising
+            provider used by the game.
+        </p>
+
+        <p class="green">
+            If your version of Retro Jumper does not contain advertising,
+            remove or modify this section accordingly.
+        </p>
+    </section>
+
+
+    <section class="card">
+        <h2>6. Children's Privacy</h2>
+
+        <p>
+            Retro Jumper is intended to be a family-friendly game.
+        </p>
+
+        <p>
+            We do not knowingly collect personal information from children
+            in a manner prohibited by applicable laws.
+        </p>
+
+        <p>
+            If you believe that a child has provided personal information
+            through the game, please contact us so that appropriate action
+            can be taken.
+        </p>
+    </section>
+
+
+    <section class="card">
+        <h2>7. Data Storage</h2>
+
+        <p>
+            Some gameplay information may be stored locally on your device.
+            This may include progress, settings, unlocked content, or
+            high scores.
+        </p>
+
+        <p>
+            Depending on the features implemented in the game, certain
+            information may also be processed or stored by third-party
+            services.
+        </p>
+    </section>
+
+
+    <section class="card" id="security">
+        <h2>8. Data Security</h2>
+
+        <p>
+            We take reasonable measures to protect information associated
+            with Retro Jumper.
+        </p>
+
+        <p>
+            However, no electronic storage or transmission method can be
+            guaranteed to be completely secure.
+        </p>
+    </section>
+
+
+    <section class="card">
+        <h2>9. Your Choices</h2>
+
+        <p>
+            Depending on your device and the services used by the game,
+            you may have options to:
+        </p>
+
+        <ul>
+            <li>Reset locally stored game data.</li>
+            <li>Uninstall the application.</li>
+            <li>Manage advertising preferences through your device.</li>
+            <li>Manage permissions granted to the application.</li>
+        </ul>
+    </section>
+
+
+    <section class="card">
+        <h2>10. Changes to This Privacy Policy</h2>
+
+        <p>
+            We may update this Privacy Policy from time to time to reflect
+            changes to Retro Jumper, new features, or applicable legal
+            requirements.
+        </p>
+
+        <p>
+            When changes are made, the updated policy will be published on
+            this page with a new "Last Updated" date.
+        </p>
+    </section>
+
+
+    <section class="card">
+        <h2>11. Offline Gameplay</h2>
+
+        <p>
+            Retro Jumper is designed to support gameplay without requiring
+            a continuous internet connection.
+        </p>
+
+        <p>
+            Some features, such as advertisements, analytics, online
+            services, or updates, may require an internet connection if
+            those features are included in the version you are using.
+        </p>
+    </section>
+
+
+    <div class="platform"></div>
+
+
+    <section class="card contact" id="contact">
+        <h2>12. Contact the Developer</h2>
+
+        <p>
+            Have a question about privacy, your data, or Retro Jumper?
+        </p>
+
+        <p>
+            We'd be happy to hear from you.
+        </p>
+
+        <!-- CHANGE THIS EMAIL -->
+        <a class="email"
+           href="mailto:your-email@example.com">
+            ✉ CONTACT US
+        </a>
+
+        <p style="margin-top:25px; color:#8da8be;">
+            Replace <strong>your-email@example.com</strong>
+            with your actual support/privacy email address.
+        </p>
+    </section>
+
+</main>
+
+
+<footer>
+
+    <div class="footer-icons">
+        🪙 ⭐ 👾 🏆
+    </div>
+
+    <div class="footer-title">
+        RETRO JUMPER
+    </div>
+
+    <div class="copyright">
+        © 2026 Retro Jumper. All rights reserved.
+    </div>
+
+    <div style="margin-top:10px;">
+        Jump higher. Collect coins. Reach the top!
+    </div>
+
+</footer>
+
+</body>
+</html>
